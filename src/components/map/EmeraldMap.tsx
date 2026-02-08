@@ -25,12 +25,12 @@ const BUILDINGS: Building[] = [
 ];
 
 const CATEGORY_COLORS = {
-  tasks: 'bg-blue-50 hover:bg-blue-100',
-  finance: 'bg-yellow-50 hover:bg-yellow-100',
-  food: 'bg-green-50 hover:bg-green-100',
-  personal: 'bg-pink-50 hover:bg-pink-100',
-  travel: 'bg-purple-50 hover:bg-purple-100',
-  home: 'bg-orange-50 hover:bg-orange-100',
+  tasks: { bg: 'bg-blue-50', border: 'border-blue-200', shadow: 'shadow-[4px_4px_0px_#BFDBFE]' },
+  finance: { bg: 'bg-lemon', border: 'border-yellow-300', shadow: 'shadow-[4px_4px_0px_#FDE68A]' },
+  food: { bg: 'bg-matcha-light', border: 'border-matcha-dark', shadow: 'shadow-sticker-dark' },
+  personal: { bg: 'bg-salmon/40', border: 'border-salmon', shadow: 'shadow-sticker-salmon' },
+  travel: { bg: 'bg-lavender/40', border: 'border-lavender', shadow: 'shadow-sticker-lavender' },
+  home: { bg: 'bg-warm', border: 'border-accent', shadow: 'shadow-sticker-accent' },
 };
 
 interface EmeraldMapProps {
@@ -43,17 +43,25 @@ export const EmeraldMap: React.FC<EmeraldMapProps> = ({ onBuildingClick }) => {
   
   // Background colors based on day period
   const bgGradients = {
-    morning: 'from-orange-200 via-yellow-100 to-matcha-light',
-    day: 'from-blue-200 via-matcha-light to-green-200',
-    evening: 'from-orange-300 via-warm to-matcha-light',
+    morning: 'from-orange-300 via-yellow-200 to-matcha-light',
+    day: 'from-blue-300 via-matcha-light to-green-300',
+    evening: 'from-orange-400 via-warm to-salmon/50',
     night: 'from-indigo-900 via-purple-900 to-blue-900',
+  };
+  
+  // Lístka greeting based on time
+  const greetings = {
+    morning: 'Dobré ránko! ☀️ Co dneska uděláme?',
+    day: 'Dneska ti to krásně roste! 🌱',
+    evening: 'Krásný podvečer! 🌅 Už jsi splnil/a dnešní návyky?',
+    night: 'Dobrou noc! 🌙 Odpočiň si',
   };
   
   const textColor = dayPeriod === 'night' ? 'text-white' : 'text-text-dark';
   
   return (
-    <div className={`relative w-full min-h-[50vh] md:min-h-[60vh] rounded-kawaii overflow-hidden bg-gradient-to-br ${bgGradients[dayPeriod]} shadow-xl p-6 md:p-8`}>
-      {/* Decorative elements - positioned in corners */}
+    <div className={`relative w-full min-h-[60vh] md:min-h-[70vh] rounded-3xl overflow-hidden bg-gradient-to-br ${bgGradients[dayPeriod]} p-6 md:p-8`}>
+      {/* Decorative elements */}
       <div className="absolute inset-0 pointer-events-none">
         {/* Trees */}
         <div className="absolute left-4 top-4 text-4xl md:text-5xl animate-pulse opacity-40" style={{ animationDuration: '4s' }}>
@@ -85,27 +93,41 @@ export const EmeraldMap: React.FC<EmeraldMapProps> = ({ onBuildingClick }) => {
         </div>
       </div>
       
-      {/* Lístka avatar floating at top center */}
-      <div className="flex justify-center mb-6 relative z-10">
-        <div 
-          className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-white flex items-center justify-center shadow-xl"
-          style={{ animation: 'float 3s ease-in-out infinite' }}
-        >
-          {!avatarError ? (
-            <img 
-              src="/dashboard/listka-avatar.png" 
-              alt="Lístka" 
-              className="w-full h-full rounded-full object-cover"
-              onError={() => setAvatarError(true)}
-            />
-          ) : (
-            <span className="text-5xl md:text-6xl">🌿</span>
-          )}
+      {/* Lístka avatar with speech bubble floating at top center */}
+      <div className="flex justify-center mb-8 relative z-10">
+        <div className="relative">
+          {/* Speech bubble */}
+          <div className={`absolute bottom-full left-1/2 transform -translate-x-1/2 mb-4 rounded-3xl px-6 py-3 shadow-sticker-dark border-[3px] border-matcha-light whitespace-nowrap ${
+            dayPeriod === 'night' ? 'bg-white' : 'bg-white'
+          }`}>
+            <p className="text-sm md:text-base font-semibold text-matcha-dark">{greetings[dayPeriod]}</p>
+            {/* Speech bubble tail */}
+            <div className="absolute top-full left-1/2 transform -translate-x-1/2 -mt-[3px]">
+              <div className="w-0 h-0 border-l-[12px] border-l-transparent border-r-[12px] border-r-transparent border-t-[15px] border-t-matcha-light"></div>
+              <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -mt-[15px] w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-t-[12px] border-t-white"></div>
+            </div>
+          </div>
+          
+          {/* Avatar */}
+          <div 
+            className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-white border-[3px] border-matcha-dark shadow-sticker-dark flex items-center justify-center animate-float"
+          >
+            {!avatarError ? (
+              <img 
+                src="/dashboard/listka-avatar.png" 
+                alt="Lístka" 
+                className="w-full h-full rounded-full object-cover"
+                onError={() => setAvatarError(true)}
+              />
+            ) : (
+              <span className="text-5xl md:text-6xl">🌿</span>
+            )}
+          </div>
         </div>
       </div>
       
       {/* Period indicator */}
-      <div className={`absolute top-4 right-4 px-3 py-1.5 rounded-full bg-white/80 backdrop-blur-sm ${textColor} text-xs md:text-sm font-medium shadow-md z-10`}>
+      <div className={`absolute top-4 right-4 px-4 py-2 rounded-full bg-white/90 backdrop-blur-sm shadow-sticker border-[2px] border-matcha-light ${textColor} text-xs md:text-sm font-semibold z-10`}>
         {dayPeriod === 'morning' && '🌅 Ráno'}
         {dayPeriod === 'day' && '☀️ Den'}
         {dayPeriod === 'evening' && '🌅 Podvečer'}
@@ -114,28 +136,31 @@ export const EmeraldMap: React.FC<EmeraldMapProps> = ({ onBuildingClick }) => {
       
       {/* Buildings Grid */}
       <div className="relative z-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-        {BUILDINGS.map((building) => (
-          <button
-            key={building.id}
-            onClick={() => onBuildingClick(building.module)}
-            className={`${CATEGORY_COLORS[building.category]} rounded-kawaii p-4 md:p-6 shadow-md hover:shadow-xl transition-all duration-200 hover:scale-105 active:scale-95 flex flex-col items-center justify-center min-h-[120px] md:min-h-[140px]`}
-          >
-            <div className="text-4xl md:text-5xl mb-2">
-              {building.icon}
-            </div>
-            <p className="text-xs md:text-sm font-semibold text-matcha-dark text-center leading-tight">
-              {building.name}
-            </p>
-          </button>
-        ))}
+        {BUILDINGS.map((building) => {
+          const colors = CATEGORY_COLORS[building.category];
+          return (
+            <button
+              key={building.id}
+              onClick={() => onBuildingClick(building.module)}
+              className={`${colors.bg} ${colors.border} ${colors.shadow} border-[3px] rounded-3xl p-4 md:p-6 hover:scale-105 active:scale-95 transition-all duration-200 hover-wobble flex flex-col items-center justify-center min-h-[140px] md:min-h-[160px]`}
+            >
+              <div className="text-5xl md:text-6xl mb-3">
+                {building.icon}
+              </div>
+              <p className="text-xs md:text-sm font-semibold text-matcha-dark text-center leading-tight">
+                {building.name}
+              </p>
+            </button>
+          );
+        })}
       </div>
       
       {/* Welcome message */}
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-center z-10">
-        <p className={`text-lg md:text-xl font-bold ${dayPeriod === 'night' ? 'text-white' : 'text-matcha-dark'} drop-shadow-lg`}>
+      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-center z-10">
+        <p className={`text-xl md:text-2xl font-bold ${dayPeriod === 'night' ? 'text-white' : 'text-matcha-dark'} drop-shadow-lg`}>
           Vesnice Emerald
         </p>
-        <p className={`text-xs md:text-sm ${dayPeriod === 'night' ? 'text-gray-300' : 'text-gray-600'}`}>
+        <p className={`text-xs md:text-sm ${dayPeriod === 'night' ? 'text-gray-300' : 'text-gray-700'} font-medium`}>
           Klikni na budovu pro vstup
         </p>
       </div>

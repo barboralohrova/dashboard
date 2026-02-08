@@ -12,7 +12,7 @@ export const StatusBar: React.FC = () => {
   const todayTasks = tasks.filter((t) => t.stav === 'aktivni').length;
   
   return (
-    <div className="bg-white/90 backdrop-blur-sm shadow-md border-b border-matcha-light/20 py-4 md:py-6 px-4 md:px-8">
+    <div className="bg-white/90 backdrop-blur-sm border-b-[3px] border-matcha-light/30 py-4 md:py-6 px-4 md:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Mobile - Stacked Layout */}
         <div className="md:hidden flex flex-col space-y-4">
@@ -20,8 +20,7 @@ export const StatusBar: React.FC = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <div 
-                className="w-16 h-16 rounded-full bg-white flex items-center justify-center shadow-lg"
-                style={{ animation: 'float 3s ease-in-out infinite' }}
+                className="w-16 h-16 rounded-full bg-white border-[3px] border-matcha-light shadow-sticker flex items-center justify-center animate-float"
               >
                 {!avatarError ? (
                   <img 
@@ -34,18 +33,21 @@ export const StatusBar: React.FC = () => {
                   <span className="text-4xl">🌿</span>
                 )}
               </div>
-              <div>
-                <div className="text-sm text-gray-600">Level {level}</div>
+              <div className="bg-matcha-light border-[2px] border-matcha-dark px-3 py-1.5 rounded-full shadow-sticker">
+                <div className="text-sm font-bold text-matcha-dark flex items-center space-x-1">
+                  <span>🌟</span>
+                  <span>Lv. {level}</span>
+                </div>
               </div>
             </div>
             
             {/* Quick stats pills */}
             <div className="flex gap-2">
-              <div className="bg-orange-100 text-orange-600 px-3 py-1.5 rounded-full text-xs font-bold shadow-sm flex items-center space-x-1">
+              <div className="bg-orange-100 border-[2px] border-orange-300 text-orange-600 px-3 py-1.5 rounded-full text-xs font-bold shadow-[3px_3px_0px_#FED7AA] flex items-center space-x-1">
                 <span>🔥</span>
                 <span>{streak_aktualni}</span>
               </div>
-              <div className="bg-blue-50 text-blue-600 px-3 py-1.5 rounded-full text-xs font-bold shadow-sm">
+              <div className="bg-blue-50 border-[2px] border-blue-200 text-blue-600 px-3 py-1.5 rounded-full text-xs font-bold shadow-[3px_3px_0px_#BFDBFE]">
                 📋 {todayTasks}
               </div>
             </div>
@@ -73,16 +75,16 @@ export const StatusBar: React.FC = () => {
           
           {/* Quick Stats */}
           <div className="col-span-4 flex gap-3 justify-end">
-            <div className="bg-blue-50 rounded-kawaii px-4 py-3 text-center shadow-md min-w-[100px]">
+            <div className="bg-blue-50 border-[3px] border-blue-200 rounded-3xl px-4 py-3 text-center shadow-[4px_4px_0px_#BFDBFE] min-w-[100px]">
               <div className="text-2xl font-bold text-blue-600">{todayTasks}</div>
-              <div className="text-xs text-gray-600">Úkolů dnes</div>
+              <div className="text-xs text-gray-600 font-medium">Úkolů dnes</div>
             </div>
-            <div className="bg-orange-50 rounded-kawaii px-4 py-3 text-center shadow-md min-w-[100px]">
+            <div className="bg-orange-50 border-[3px] border-orange-300 rounded-3xl px-4 py-3 text-center shadow-[4px_4px_0px_#FED7AA] min-w-[100px]">
               <div className="text-2xl font-bold text-orange-600 flex items-center justify-center space-x-1">
                 <span>{streak_aktualni}</span>
                 <span>🔥</span>
               </div>
-              <div className="text-xs text-gray-600">Streak</div>
+              <div className="text-xs text-gray-600 font-medium">Streak</div>
             </div>
           </div>
         </div>

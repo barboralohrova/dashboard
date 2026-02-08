@@ -36,8 +36,8 @@ export const HabitList: React.FC = () => {
     return (
       <div className="max-w-4xl mx-auto px-4 md:px-8 py-6">
         <div className="text-center py-12">
-          <div className="text-6xl mb-4">🏋️</div>
-          <p className="text-xl text-gray-600">Načítám návyky...</p>
+          <div className="text-6xl mb-4 animate-bounce-gentle">🏋️</div>
+          <p className="text-xl text-gray-600">(◕‿◕) Načítám návyky...</p>
         </div>
       </div>
     );
@@ -73,8 +73,8 @@ export const HabitList: React.FC = () => {
           
           <p className="text-sm opacity-90">
             {completionPercentage === 100 
-              ? '🎉 Skvělá práce! Všechny návyky splněny!' 
-              : `${completionPercentage}% hotovo - můžeš na to!`}
+              ? '(｡◕‿◕｡) Skvělá práce! Všechny návyky splněny! 🎉' 
+              : `${completionPercentage}% hotovo - můžeš na to! 💪`}
           </p>
         </div>
       )}
@@ -100,7 +100,7 @@ export const HabitList: React.FC = () => {
         // Empty state
         <div className="text-center py-12">
           <div className="text-6xl mb-4">🌱</div>
-          <p className="text-xl text-gray-600 mb-2">Zatím žádné návyky</p>
+          <p className="text-xl text-gray-600 mb-2">(◕ᴗ◕✿) Zatím žádné návyky</p>
           <p className="text-gray-500 mb-6">
             Začni budovat zdravé návyky a sbírej XP každý den!
           </p>

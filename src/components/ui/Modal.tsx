@@ -33,14 +33,14 @@ export const Modal: React.FC<ModalProps> = ({
       
       {/* Modal */}
       <div
-        className={`relative bg-[#FFFCF7] rounded-kawaii shadow-2xl w-full ${sizeClasses[size]} max-h-[90vh] overflow-y-auto border border-matcha-light/20`}
+        className={`relative bg-card-bg rounded-3xl shadow-sticker-dark border-[3px] border-matcha-light w-full ${sizeClasses[size]} max-h-[90vh] overflow-y-auto`}
       >
         {title && (
-          <div className="flex items-center justify-between p-6 border-b border-gray-200">
+          <div className="flex items-center justify-between p-6 border-b-[3px] border-matcha-light/30">
             <h2 className="text-2xl font-bold text-matcha-dark">{title}</h2>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-gray-600 text-2xl"
+              className="w-8 h-8 flex items-center justify-center rounded-full bg-salmon/20 text-salmon hover:bg-salmon hover:text-white transition-all text-xl font-bold hover-wobble"
             >
               ×
             </button>

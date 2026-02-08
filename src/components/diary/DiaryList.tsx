@@ -52,20 +52,20 @@ export const DiaryList: React.FC = () => {
       </div>
       
       {/* Filters */}
-      <div className="bg-white rounded-kawaii p-4 mb-6 shadow-md">
+      <div className="bg-card-bg border-[3px] border-matcha-light/30 rounded-3xl p-4 md:p-6 mb-6 shadow-sticker">
         <div className="space-y-4">
           {/* Mood filter */}
           <div>
-            <label className="block text-sm font-medium mb-2">Nálada</label>
+            <label className="block text-sm font-semibold mb-2 text-matcha-dark">Nálada</label>
             <div className="flex flex-wrap gap-2">
               {MOOD_FILTERS.map(({ value, emoji, label }) => (
                 <button
                   key={value}
                   onClick={() => setMoodFilter(value)}
-                  className={`px-3 py-1.5 rounded-kawaii text-sm flex items-center space-x-1 ${
+                  className={`px-4 py-2 rounded-2xl text-sm font-medium flex items-center space-x-1 transition-all hover-wobble ${
                     moodFilter === value
-                      ? 'bg-matcha-dark text-white'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      ? 'bg-matcha-dark text-white shadow-sticker-dark'
+                      : 'bg-white border-[2px] border-gray-200 text-gray-700 hover:border-matcha-light'
                   }`}
                 >
                   <span>{emoji}</span>
@@ -77,13 +77,13 @@ export const DiaryList: React.FC = () => {
           
           {/* Search */}
           <div>
-            <label className="block text-sm font-medium mb-2">Hledat</label>
+            <label className="block text-sm font-semibold mb-2 text-matcha-dark">Hledat</label>
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Hledat v názvech a obsahu..."
-              className="w-full px-4 py-2 rounded-kawaii border-2 border-gray-200 focus:border-matcha-dark focus:outline-none"
+              className="w-full px-4 py-3 rounded-2xl border-[3px] border-matcha-light/30 focus:border-matcha-dark focus:outline-none bg-white font-medium"
             />
           </div>
         </div>
@@ -92,8 +92,8 @@ export const DiaryList: React.FC = () => {
       {/* Loading state */}
       {isLoading && (
         <div className="text-center py-12">
-          <div className="text-4xl mb-4">⏳</div>
-          <p className="text-gray-600">Načítám záznamy...</p>
+          <div className="text-4xl mb-4 animate-bounce-gentle">⏳</div>
+          <p className="text-gray-600">(◕‿◕) Načítám záznamy...</p>
         </div>
       )}
       
@@ -115,7 +115,7 @@ export const DiaryList: React.FC = () => {
       {!isLoading && filteredEntries.length === 0 && entries.length === 0 && (
         <div className="text-center py-12">
           <div className="text-6xl mb-4">📖</div>
-          <p className="text-xl text-gray-600 mb-2">Zatím žádné záznamy</p>
+          <p className="text-xl text-gray-600 mb-2">(◕ᴗ◕✿) Zatím žádné záznamy</p>
           <p className="text-gray-500 mb-6">Začni psát svůj deník a získej +10 XP za každý zápis!</p>
           <Button onClick={() => setIsFormOpen(true)} variant="primary">
             Vytvořit první zápis
@@ -127,7 +127,7 @@ export const DiaryList: React.FC = () => {
       {!isLoading && filteredEntries.length === 0 && entries.length > 0 && (
         <div className="text-center py-12">
           <div className="text-6xl mb-4">🔍</div>
-          <p className="text-xl text-gray-600 mb-2">Žádné výsledky</p>
+          <p className="text-xl text-gray-600 mb-2">(・_・?) Žádné výsledky</p>
           <p className="text-gray-500">Zkus změnit filtr nebo hledaný výraz</p>
         </div>
       )}
