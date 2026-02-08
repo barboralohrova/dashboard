@@ -3,6 +3,9 @@ import { useAuthStore } from '../../stores/authStore';
 import { useGameStore } from '../../stores/gameStore';
 import { useTaskStore } from '../../stores/taskStore';
 import { useHabitStore } from '../../stores/habitStore';
+import { useDiaryStore } from '../../stores/diaryStore';
+import { useFinanceStore } from '../../stores/financeStore';
+import { useFoodStore } from '../../stores/foodStore';
 import { getGreeting } from '../../utils/helpers';
 import { Header } from '../layout/Header';
 import { StatusBar } from '../layout/StatusBar';
@@ -10,12 +13,18 @@ import { BottomNav } from '../layout/BottomNav';
 import { EmeraldMap } from '../map/EmeraldMap';
 import { TaskList } from '../tasks/TaskList';
 import { HabitList } from '../habits/HabitList';
+import { DiaryList } from '../diary/DiaryList';
+import { FinanceList } from '../finance/FinanceList';
+import { FoodList } from '../food/FoodList';
 
 export const Dashboard: React.FC = () => {
   const { user } = useAuthStore();
   const { loadGameState } = useGameStore();
   const { loadTasks } = useTaskStore();
   const { loadHabits } = useHabitStore();
+  const { loadEntries } = useDiaryStore();
+  const { loadEntries: loadFinanceEntries } = useFinanceStore();
+  const { loadRecipes } = useFoodStore();
   const [activeModule, setActiveModule] = useState<string>('map');
   
   useEffect(() => {
@@ -23,7 +32,10 @@ export const Dashboard: React.FC = () => {
     loadGameState();
     loadTasks();
     loadHabits();
-  }, [loadGameState, loadTasks, loadHabits]);
+    loadEntries();
+    loadFinanceEntries();
+    loadRecipes();
+  }, [loadGameState, loadTasks, loadHabits, loadEntries, loadFinanceEntries, loadRecipes]);
   
   const handleModuleChange = (module: string) => {
     setActiveModule(module);
@@ -72,17 +84,23 @@ export const Dashboard: React.FC = () => {
           
           {activeModule === 'habits' && <HabitList />}
           
+          {activeModule === 'diary' && <DiaryList />}
+          
+          {activeModule === 'finance' && <FinanceList />}
+          
+          {activeModule === 'food' && <FoodList />}
+          
           {activeModule === 'more' && (
             <div className="text-center py-12">
               <div className="text-6xl mb-4">≡</div>
               <h3 className="text-2xl font-bold text-matcha-dark mb-2">Další moduly</h3>
-              <p className="text-gray-600">Finance, Jídlo, Deník, Zdraví, Pojištění, Vztahy, Cestování...</p>
+              <p className="text-gray-600">Zdraví, Pojištění, Vztahy, Cestování...</p>
               <p className="text-sm text-gray-500 mt-4">Brzy k dispozici</p>
             </div>
           )}
           
           {/* Other modules */}
-          {['finance', 'food', 'diary', 'learning', 'home', 'health', 'relationships', 'insurance', 'travel'].includes(activeModule) && (
+          {['learning', 'home', 'health', 'relationships', 'insurance', 'travel'].includes(activeModule) && (
             <div className="text-center py-12">
               <div className="text-6xl mb-4">🏗️</div>
               <h3 className="text-2xl font-bold text-matcha-dark mb-2">
