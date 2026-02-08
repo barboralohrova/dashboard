@@ -14,3 +14,18 @@ body {
   background-color: #F7F5F0;
   color: #4A4A3F;
 }
+
+/* Float animation for Lístka avatar - gentle and magical */
+@keyframes float {
+  0%, 100% { 
+    transform: translateY(0px); 
+  }
+  50% { 
+    transform: translateY(-10px); 
+  }
+}
+
+/* Utility classes for warm backgrounds */
+.bg-warm-card {
+  background-color: #FFFCF7;
+}

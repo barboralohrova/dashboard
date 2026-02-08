@@ -30,12 +30,12 @@ export const Dashboard: React.FC = () => {
   };
   
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-b from-background to-warm/20">
       <Header />
       
       <main className="pb-20 md:pb-0">
         {/* Welcome Section */}
-        <div className="bg-gradient-to-r from-matcha-dark to-matcha-light text-white py-8 px-6">
+        <div className="bg-gradient-to-r from-matcha-dark to-matcha-light text-white py-8 px-6 shadow-md">
           <div className="max-w-7xl mx-auto">
             <h2 className="text-3xl font-bold mb-2">
               {getGreeting()}, {user?.name?.split(' ')[0] || 'Cestovateli'}!
@@ -50,7 +50,7 @@ export const Dashboard: React.FC = () => {
         <StatusBar />
         
         {/* Main Content */}
-        <div className="max-w-7xl mx-auto px-6 py-8">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-8">
           {activeModule === 'map' && (
             <div>
               <h3 className="text-2xl font-bold text-matcha-dark mb-6">
@@ -91,7 +91,7 @@ export const Dashboard: React.FC = () => {
               <p className="text-gray-600">Tento modul je ve vývoji</p>
               <button
                 onClick={() => setActiveModule('map')}
-                className="mt-4 px-6 py-2 bg-matcha-dark text-white rounded-kawaii hover:scale-105 transition-transform"
+                className="mt-4 px-6 py-2 bg-gradient-to-r from-matcha-dark to-[#8BAA7E] text-white rounded-kawaii hover:scale-105 hover:shadow-lg transition-all duration-200 active:scale-[0.98]"
               >
                 Zpět na mapu
               </button>

@@ -41,7 +41,18 @@ function App() {
     return (
       <div className="min-h-screen bg-gradient-to-b from-matcha-light to-warm flex items-center justify-center">
         <div className="text-center">
-          <div className="text-6xl mb-6 animate-bounce">🌿</div>
+          <div className="flex justify-center mb-6">
+            <div 
+              className="w-24 h-24 rounded-full bg-white flex items-center justify-center shadow-xl"
+              style={{ animation: 'float 3s ease-in-out infinite' }}
+            >
+              <img 
+                src="/dashboard/listka-avatar.png" 
+                alt="Lístka" 
+                className="w-full h-full rounded-full object-cover"
+              />
+            </div>
+          </div>
           <h2 className="text-2xl font-bold text-matcha-dark mb-4">Načítání...</h2>
         </div>
       </div>
