@@ -97,12 +97,14 @@ export const EmeraldMap: React.FC<EmeraldMapProps> = ({ onBuildingClick }) => {
       <div className="flex justify-center mb-8 relative z-10">
         <div className="relative">
           {/* Speech bubble */}
-          <div className={`absolute bottom-full left-1/2 transform -translate-x-1/2 mb-4 bg-white rounded-3xl px-6 py-3 shadow-sticker-dark border-[3px] border-matcha-light whitespace-nowrap ${dayPeriod === 'night' ? 'bg-opacity-95' : ''}`}>
+          <div className={`absolute bottom-full left-1/2 transform -translate-x-1/2 mb-4 rounded-3xl px-6 py-3 shadow-sticker-dark border-[3px] border-matcha-light whitespace-nowrap ${
+            dayPeriod === 'night' ? 'bg-white' : 'bg-white'
+          }`}>
             <p className="text-sm md:text-base font-semibold text-matcha-dark">{greetings[dayPeriod]}</p>
             {/* Speech bubble tail */}
-            <div className="absolute top-full left-1/2 transform -translate-x-1/2 -mt-1">
-              <div className="w-0 h-0 border-l-[12px] border-l-transparent border-r-[12px] border-r-transparent border-t-[12px] border-t-matcha-light"></div>
-              <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -mt-[14px] w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-t-[10px] border-t-white"></div>
+            <div className="absolute top-full left-1/2 transform -translate-x-1/2 -mt-[3px]">
+              <div className="w-0 h-0 border-l-[12px] border-l-transparent border-r-[12px] border-r-transparent border-t-[15px] border-t-matcha-light"></div>
+              <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -mt-[15px] w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-t-[12px] border-t-white"></div>
             </div>
           </div>
           
