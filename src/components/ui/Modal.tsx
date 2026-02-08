@@ -33,7 +33,7 @@ export const Modal: React.FC<ModalProps> = ({
       
       {/* Modal */}
       <div
-        className={`relative bg-white rounded-kawaii shadow-2xl w-full ${sizeClasses[size]} max-h-[90vh] overflow-y-auto`}
+        className={`relative bg-[#FFFCF7] rounded-kawaii shadow-2xl w-full ${sizeClasses[size]} max-h-[90vh] overflow-y-auto border border-matcha-light/20`}
       >
         {title && (
           <div className="flex items-center justify-between p-6 border-b border-gray-200">

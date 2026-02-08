@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAuthStore } from '../stores/authStore';
 import { Button } from './ui';
 
 export const LandingPage: React.FC = () => {
   const { login, isLoading, error } = useAuthStore();
+  const [avatarError, setAvatarError] = useState(false);
   
   return (
     <div className="min-h-screen bg-gradient-to-b from-matcha-light to-warm flex items-center justify-center p-4">
@@ -15,18 +16,23 @@ export const LandingPage: React.FC = () => {
               className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-white flex items-center justify-center shadow-xl"
               style={{ animation: 'float 3s ease-in-out infinite' }}
             >
-              <img 
-                src="/dashboard/listka-avatar.png" 
-                alt="Lístka" 
-                className="w-full h-full rounded-full object-cover"
-              />
+              {!avatarError ? (
+                <img 
+                  src="/dashboard/listka-avatar.png" 
+                  alt="Lístka" 
+                  className="w-full h-full rounded-full object-cover"
+                  onError={() => setAvatarError(true)}
+                />
+              ) : (
+                <span className="text-5xl md:text-6xl">🌿</span>
+              )}
             </div>
           </div>
           <h1 className="text-5xl md:text-6xl font-bold text-matcha-dark mb-4">
-            Forest Dashboard
+            Vesnice Emerald
           </h1>
           <p className="text-xl text-gray-700 mb-2">
-            Vítej v lese Emerald
+            Vítej v lese Emerald 🌿
           </p>
           <p className="text-lg text-gray-600">
             Tvůj osobní životní organizér s gamifikací

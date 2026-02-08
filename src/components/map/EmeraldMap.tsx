@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { getDayPeriod } from '../../utils/helpers';
 
 interface Building {
@@ -39,6 +39,7 @@ interface EmeraldMapProps {
 
 export const EmeraldMap: React.FC<EmeraldMapProps> = ({ onBuildingClick }) => {
   const dayPeriod = getDayPeriod();
+  const [avatarError, setAvatarError] = useState(false);
   
   // Background colors based on day period
   const bgGradients = {
@@ -90,11 +91,16 @@ export const EmeraldMap: React.FC<EmeraldMapProps> = ({ onBuildingClick }) => {
           className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-white flex items-center justify-center shadow-xl"
           style={{ animation: 'float 3s ease-in-out infinite' }}
         >
-          <img 
-            src="/dashboard/listka-avatar.png" 
-            alt="Lístka" 
-            className="w-full h-full rounded-full object-cover"
-          />
+          {!avatarError ? (
+            <img 
+              src="/dashboard/listka-avatar.png" 
+              alt="Lístka" 
+              className="w-full h-full rounded-full object-cover"
+              onError={() => setAvatarError(true)}
+            />
+          ) : (
+            <span className="text-5xl md:text-6xl">🌿</span>
+          )}
         </div>
       </div>
       

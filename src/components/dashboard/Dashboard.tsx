@@ -76,7 +76,7 @@ export const Dashboard: React.FC = () => {
       
       <main className="pb-20 md:pb-0">
         {/* Welcome Section */}
-        <div className="bg-gradient-to-r from-matcha-dark to-matcha-light text-white py-8 px-6 shadow-md">
+        <div className="bg-gradient-to-r from-matcha-dark to-matcha-light text-white py-8 px-6 md:px-8 shadow-md">
           <div className="max-w-7xl mx-auto">
             <h2 className="text-3xl font-bold mb-2">
               {getGreeting()}, {user?.name?.split(' ')[0] || 'Cestovateli'}!
@@ -91,7 +91,7 @@ export const Dashboard: React.FC = () => {
         <StatusBar />
         
         {/* Main Content */}
-        <div className="max-w-7xl mx-auto px-4 md:px-6 py-8">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 py-8">
           {activeModule === 'map' && (
             <div>
               <h3 className="text-2xl font-bold text-matcha-dark mb-6">

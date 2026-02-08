@@ -41,7 +41,7 @@ export const HealthList: React.FC = () => {
   
   if (isLoading) {
     return (
-      <div className="max-w-4xl mx-auto p-6">
+      <div className="max-w-4xl mx-auto px-4 md:px-8 py-6">
         <div className="text-center py-12">
           <div className="text-6xl mb-4">🏥</div>
           <p className="text-xl text-gray-600">Načítám zdravotní záznamy...</p>
@@ -51,7 +51,7 @@ export const HealthList: React.FC = () => {
   }
   
   return (
-    <div className="max-w-4xl mx-auto p-6">
+    <div className="max-w-4xl mx-auto px-4 md:px-8 py-6">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-3xl font-bold text-matcha-dark">🏥 Zdraví</h2>

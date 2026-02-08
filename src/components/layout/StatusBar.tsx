@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useGameStore } from '../../stores/gameStore';
 import { useTaskStore } from '../../stores/taskStore';
 import { ListkaAvatar } from '../gamification/ListkaAvatar';
@@ -7,11 +7,12 @@ import { XPBar } from '../gamification/XPBar';
 export const StatusBar: React.FC = () => {
   const { streak_aktualni, level } = useGameStore();
   const { tasks } = useTaskStore();
+  const [avatarError, setAvatarError] = useState(false);
   
   const todayTasks = tasks.filter((t) => t.stav === 'aktivni').length;
   
   return (
-    <div className="bg-white/90 backdrop-blur-sm shadow-md border-b border-matcha-light/20 p-4 md:p-6">
+    <div className="bg-white/90 backdrop-blur-sm shadow-md border-b border-matcha-light/20 py-4 md:py-6 px-4 md:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Mobile - Stacked Layout */}
         <div className="md:hidden flex flex-col space-y-4">
@@ -22,11 +23,16 @@ export const StatusBar: React.FC = () => {
                 className="w-16 h-16 rounded-full bg-white flex items-center justify-center shadow-lg"
                 style={{ animation: 'float 3s ease-in-out infinite' }}
               >
-                <img 
-                  src="/dashboard/listka-avatar.png" 
-                  alt="Lístka" 
-                  className="w-full h-full rounded-full object-cover"
-                />
+                {!avatarError ? (
+                  <img 
+                    src="/dashboard/listka-avatar.png" 
+                    alt="Lístka" 
+                    className="w-full h-full rounded-full object-cover"
+                    onError={() => setAvatarError(true)}
+                  />
+                ) : (
+                  <span className="text-4xl">🌿</span>
+                )}
               </div>
               <div>
                 <div className="text-sm text-gray-600">Level {level}</div>
@@ -35,8 +41,9 @@ export const StatusBar: React.FC = () => {
             
             {/* Quick stats pills */}
             <div className="flex gap-2">
-              <div className="bg-matcha-light text-matcha-dark px-3 py-1.5 rounded-full text-xs font-bold shadow-sm">
-                🔥 {streak_aktualni}
+              <div className="bg-orange-100 text-orange-600 px-3 py-1.5 rounded-full text-xs font-bold shadow-sm flex items-center space-x-1">
+                <span>🔥</span>
+                <span>{streak_aktualni}</span>
               </div>
               <div className="bg-blue-50 text-blue-600 px-3 py-1.5 rounded-full text-xs font-bold shadow-sm">
                 📋 {todayTasks}
@@ -71,7 +78,10 @@ export const StatusBar: React.FC = () => {
               <div className="text-xs text-gray-600">Úkolů dnes</div>
             </div>
             <div className="bg-orange-50 rounded-kawaii px-4 py-3 text-center shadow-md min-w-[100px]">
-              <div className="text-2xl font-bold text-orange-600">{streak_aktualni} 🔥</div>
+              <div className="text-2xl font-bold text-orange-600 flex items-center justify-center space-x-1">
+                <span>{streak_aktualni}</span>
+                <span>🔥</span>
+              </div>
               <div className="text-xs text-gray-600">Streak</div>
             </div>
           </div>
