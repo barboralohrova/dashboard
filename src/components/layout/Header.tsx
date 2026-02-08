@@ -4,7 +4,7 @@ import { useGameStore } from '../../stores/gameStore';
 
 export const Header: React.FC = () => {
   const { user, logout } = useAuthStore();
-  const { level, streak_aktualni, xp_aktualni, xp_dalsi_level } = useGameStore();
+  const { level, streak_aktualni, xp, xpForNextLevel } = useGameStore();
   const [avatarError, setAvatarError] = useState(false);
   
   return (
@@ -37,12 +37,12 @@ export const Header: React.FC = () => {
           </div>
           <div className="flex flex-col min-w-[200px]">
             <div className="text-xs text-gray-600 mb-1 text-center">
-              {xp_aktualni} / {xp_dalsi_level} XP do dalšího levelu
+              {xp} / {xpForNextLevel} XP do dalšího levelu
             </div>
             <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
               <div 
                 className="h-full bg-gradient-to-r from-matcha-dark to-matcha-light transition-all duration-300"
-                style={{ width: `${(xp_aktualni / xp_dalsi_level) * 100}%` }}
+                style={{ width: `${(xp / xpForNextLevel) * 100}%` }}
               />
             </div>
           </div>
