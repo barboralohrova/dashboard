@@ -16,9 +16,9 @@ const SHEETS = [
   { name: 'jidlo', headers: ['id', 'nazev', 'typ_jidla', 'ingredience', 'postup', 'cas_pripravy', 'porce', 'oblibene', 'tagy', 'datum_pridani'] },
   { name: 'denik', headers: ['id', 'nazev', 'obsah', 'nalada', 'datum', 'tagy', 'vytvoreno', 'upraveno'] },
   { name: 'zdravi', headers: ['id', 'placeholder'] },
-  { name: 'pojisteni', headers: ['id', 'placeholder'] },
-  { name: 'vztahy', headers: ['id', 'placeholder'] },
-  { name: 'cestovani', headers: ['id', 'placeholder'] },
+  { name: 'pojisteni', headers: ['id', 'nazev', 'typ_pojisteni', 'pojistovna', 'cislo_smlouvy', 'castka_mesicne', 'datum_zacatku', 'datum_konce', 'poznamka', 'pripominka_pred_koncem_dny', 'datum_pridani'] },
+  { name: 'vztahy', headers: ['id', 'jmeno', 'typ_vztahu', 'narozeniny', 'kontakt', 'poznamka', 'posledni_kontakt', 'pripominka_dny', 'tagy', 'datum_pridani'] },
+  { name: 'cestovani', headers: ['id', 'nazev', 'destinace', 'datum_od', 'datum_do', 'rozpocet', 'utraceno', 'stav', 'poznamka', 'tagy', 'datum_pridani'] },
 ];
 
 /**

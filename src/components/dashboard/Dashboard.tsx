@@ -6,6 +6,9 @@ import { useHabitStore } from '../../stores/habitStore';
 import { useDiaryStore } from '../../stores/diaryStore';
 import { useFinanceStore } from '../../stores/financeStore';
 import { useFoodStore } from '../../stores/foodStore';
+import { useRelationshipStore } from '../../stores/relationshipStore';
+import { useInsuranceStore } from '../../stores/insuranceStore';
+import { useTravelStore } from '../../stores/travelStore';
 import { getGreeting } from '../../utils/helpers';
 import { Header } from '../layout/Header';
 import { StatusBar } from '../layout/StatusBar';
@@ -16,6 +19,9 @@ import { HabitList } from '../habits/HabitList';
 import { DiaryList } from '../diary/DiaryList';
 import { FinanceList } from '../finance/FinanceList';
 import { FoodList } from '../food/FoodList';
+import { RelationshipList } from '../relationships/RelationshipList';
+import { InsuranceList } from '../insurance/InsuranceList';
+import { TravelList } from '../travel/TravelList';
 
 export const Dashboard: React.FC = () => {
   const { user } = useAuthStore();
@@ -25,6 +31,9 @@ export const Dashboard: React.FC = () => {
   const { loadEntries } = useDiaryStore();
   const { loadEntries: loadFinanceEntries } = useFinanceStore();
   const { loadRecipes } = useFoodStore();
+  const { loadEntries: loadRelationshipEntries } = useRelationshipStore();
+  const { loadEntries: loadInsuranceEntries } = useInsuranceStore();
+  const { loadEntries: loadTravelEntries } = useTravelStore();
   const [activeModule, setActiveModule] = useState<string>('map');
   
   useEffect(() => {
@@ -35,7 +44,10 @@ export const Dashboard: React.FC = () => {
     loadEntries();
     loadFinanceEntries();
     loadRecipes();
-  }, [loadGameState, loadTasks, loadHabits, loadEntries, loadFinanceEntries, loadRecipes]);
+    loadRelationshipEntries();
+    loadInsuranceEntries();
+    loadTravelEntries();
+  }, [loadGameState, loadTasks, loadHabits, loadEntries, loadFinanceEntries, loadRecipes, loadRelationshipEntries, loadInsuranceEntries, loadTravelEntries]);
   
   const handleModuleChange = (module: string) => {
     setActiveModule(module);
@@ -90,17 +102,22 @@ export const Dashboard: React.FC = () => {
           
           {activeModule === 'food' && <FoodList />}
           
+          {activeModule === 'relationships' && <RelationshipList />}
+          
+          {activeModule === 'insurance' && <InsuranceList />}
+          
+          {activeModule === 'travel' && <TravelList />}
+          
           {activeModule === 'more' && (
             <div className="text-center py-12">
               <div className="text-6xl mb-4">≡</div>
               <h3 className="text-2xl font-bold text-matcha-dark mb-2">Další moduly</h3>
-              <p className="text-gray-600">Zdraví, Pojištění, Vztahy, Cestování...</p>
-              <p className="text-sm text-gray-500 mt-4">Brzy k dispozici</p>
+              <p className="text-gray-600">Více modulů brzy k dispozici...</p>
             </div>
           )}
           
           {/* Other modules */}
-          {['learning', 'home', 'health', 'relationships', 'insurance', 'travel'].includes(activeModule) && (
+          {['learning', 'home', 'health'].includes(activeModule) && (
             <div className="text-center py-12">
               <div className="text-6xl mb-4">🏗️</div>
               <h3 className="text-2xl font-bold text-matcha-dark mb-2">

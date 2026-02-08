@@ -186,3 +186,53 @@ export interface JidloEntry {
 }
 
 export type MealType = 'snidane' | 'obed' | 'vecere' | 'svacina' | 'dezert' | 'napoj';
+
+// Vztahy (Relationships) types
+export interface VztahEntry {
+  id: string;
+  jmeno: string;
+  typ_vztahu: RelationshipType;
+  narozeniny?: string;
+  kontakt?: string;
+  poznamka?: string;
+  posledni_kontakt?: string;
+  pripominka_dny?: number;
+  tagy: string[];
+  datum_pridani: string;
+}
+
+export type RelationshipType = 'rodina' | 'partner' | 'pritel' | 'kolega' | 'známý' | 'ostatni';
+
+// Pojištění (Insurance) types
+export interface PojisteniEntry {
+  id: string;
+  nazev: string;
+  typ_pojisteni: InsuranceType;
+  pojistovna: string;
+  cislo_smlouvy?: string;
+  castka_mesicne: number;
+  datum_zacatku: string;
+  datum_konce?: string;
+  poznamka?: string;
+  pripominka_pred_koncem_dny?: number;
+  datum_pridani: string;
+}
+
+export type InsuranceType = 'zdravotni' | 'zivotni' | 'cestovni' | 'majetek' | 'auto' | 'odpovědnost' | 'ostatni';
+
+// Cestování (Travel) types
+export interface CestovaniEntry {
+  id: string;
+  nazev: string;
+  destinace: string;
+  datum_od?: string;
+  datum_do?: string;
+  rozpocet?: number;
+  utraceno?: number;
+  stav: TripStatus;
+  poznamka?: string;
+  tagy: string[];
+  datum_pridani: string;
+}
+
+export type TripStatus = 'planovany' | 'probihajici' | 'dokonceny' | 'zruseny';
