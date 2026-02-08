@@ -41,6 +41,11 @@ export async function initiateGoogleLogin(): Promise<void> {
 
 /**
  * Zpracuje OAuth callback a získá access token z URL hash fragmentu
+ * 
+ * Security Note: Implicit Grant flow exposes the access token in the URL hash,
+ * which may be visible in browser history. This is acceptable for client-side
+ * SPAs without a backend, but tokens should be cleared from the URL immediately
+ * after extraction and should not be logged or stored insecurely.
  */
 export async function handleOAuthCallback(): Promise<{ accessToken: string; refreshToken?: string }> {
   // Parse token from URL hash fragment (Implicit Grant)

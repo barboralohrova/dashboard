@@ -67,9 +67,24 @@ npm run preview
 - **Google OAuth Client ID**: `365489384585-cdh01hr4lu5m1d98s3js94cpo7lovttv.apps.googleusercontent.com`
 - **Default Spreadsheet ID**: `1xaF3Rso85FmDwgEOqdsduOTJdUUfNEFjh2QW0Ykq24g`
 - **GitHub Pages URL**: `https://barboralohrova.github.io/dashboard/`
-- **OAuth callback**: 
-  - Production: `https://barboralohrova.github.io/dashboard/callback`
-  - Development: `http://localhost:5173/callback`
+- **OAuth Redirect URIs** (must be configured in Google Cloud Console):
+  - Production: `https://barboralohrova.github.io/dashboard/`
+  - Development: `http://localhost:5173/`
+
+### Google Cloud Console Setup
+
+To use this application, you need to configure the OAuth redirect URIs in Google Cloud Console:
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Select your project
+3. Navigate to **APIs & Services** > **Credentials**
+4. Click on your OAuth 2.0 Client ID
+5. Under **Authorized redirect URIs**, add:
+   - `https://barboralohrova.github.io/dashboard/`
+   - `http://localhost:5173/`
+6. Save the changes
+
+**Note**: The application now uses **Implicit Grant flow** (response_type=token) instead of Authorization Code flow, which allows the access token to be returned directly in the URL hash without requiring a backend server for token exchange.
 
 ## 🎮 Gamifikace
 

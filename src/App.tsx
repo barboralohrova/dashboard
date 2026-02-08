@@ -8,7 +8,8 @@ function App() {
   const { isAuthenticated } = useAuthStore();
   
   // Check if we're returning from OAuth (hash contains access_token)
-  const isOAuthCallback = window.location.hash.includes('access_token=');
+  const isOAuthCallback = window.location.hash.length > 0 && 
+    new URLSearchParams(window.location.hash.substring(1)).has('access_token');
   
   // Handle GitHub Pages SPA routing
   useEffect(() => {

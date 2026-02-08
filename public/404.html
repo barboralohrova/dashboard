@@ -5,8 +5,14 @@
   <title>Redirecting...</title>
   <script>
     // GitHub Pages SPA redirect trick
-    // Save the current path and redirect to the app root
-    sessionStorage.setItem('redirect', window.location.pathname + window.location.search + window.location.hash);
+    // Save the current path but NOT sensitive OAuth hash parameters
+    var fullUrl = window.location.pathname + window.location.search + window.location.hash;
+    
+    // If this is an OAuth callback with sensitive data, don't store it
+    if (!window.location.hash.includes('access_token=')) {
+      sessionStorage.setItem('redirect', fullUrl);
+    }
+    
     window.location.href = '/dashboard/';
   </script>
 </head>
