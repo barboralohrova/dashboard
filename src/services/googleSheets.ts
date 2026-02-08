@@ -60,7 +60,7 @@ export async function initializeSpreadsheet(accessToken: string, spreadsheetId?:
     }
     
     if (requests.length > 0) {
-      await fetch(
+      const batchResponse = await fetch(
         `https://sheets.googleapis.com/v4/spreadsheets/${id}:batchUpdate`,
         {
           method: 'POST',
@@ -71,6 +71,11 @@ export async function initializeSpreadsheet(accessToken: string, spreadsheetId?:
           body: JSON.stringify({ requests }),
         }
       );
+      
+      if (!batchResponse.ok) {
+        const errorBody = await batchResponse.text();
+        throw new Error(`Failed to add sheets: ${batchResponse.status} ${errorBody}`);
+      }
     }
     
     // Inicializovat hlavičky pro všechny listy
@@ -94,10 +99,20 @@ export async function initializeSpreadsheet(accessToken: string, spreadsheetId?:
       }
     );
     
-    // Inicializovat výchozí gamifikaci
-    await writeToSheet(accessToken, id, 'gamifikace', [
-      ['user_001', '1', '0', '0', '0', '0', new Date().toISOString(), '', ''],
-    ]);
+    // Inicializovat výchozí gamifikaci pouze pokud list je prázdný
+    try {
+      const gamifikaceData = await readFromSheet(accessToken, id, 'gamifikace');
+      if (gamifikaceData.length === 0) {
+        await writeToSheet(accessToken, id, 'gamifikace', [
+          ['user_001', '1', '0', '0', '0', '0', new Date().toISOString(), '', ''],
+        ]);
+      }
+    } catch {
+      // If reading fails (empty sheet), write defaults
+      await writeToSheet(accessToken, id, 'gamifikace', [
+        ['user_001', '1', '0', '0', '0', '0', new Date().toISOString(), '', ''],
+      ]);
+    }
     
     return id;
   } catch (error) {
@@ -127,7 +142,8 @@ export async function readFromSheet<T = any[]>(
   );
   
   if (!response.ok) {
-    throw new Error(`Failed to read from sheet: ${response.statusText}`);
+    const errorBody = await response.text();
+    throw new Error(`Failed to read from sheet: ${response.status} ${errorBody}`);
   }
   
   const data = await response.json();
@@ -166,7 +182,7 @@ export async function writeToSheet(
   const fullRange = range ? `${sheetName}!${range}` : `${sheetName}!A2`;
   
   const response = await fetch(
-    `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${encodeURIComponent(fullRange)}`,
+    `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${encodeURIComponent(fullRange)}?valueInputOption=RAW`,
     {
       method: 'PUT',
       headers: {
@@ -181,7 +197,8 @@ export async function writeToSheet(
   );
   
   if (!response.ok) {
-    throw new Error(`Failed to write to sheet: ${response.statusText}`);
+    const errorBody = await response.text();
+    throw new Error(`Failed to write to sheet: ${response.status} ${errorBody}`);
   }
 }
 
