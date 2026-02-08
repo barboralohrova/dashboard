@@ -9,6 +9,10 @@ import { useFoodStore } from '../../stores/foodStore';
 import { useRelationshipStore } from '../../stores/relationshipStore';
 import { useInsuranceStore } from '../../stores/insuranceStore';
 import { useTravelStore } from '../../stores/travelStore';
+import { useHealthStore } from '../../stores/healthStore';
+import { useLearningStore } from '../../stores/learningStore';
+import { useHomeStore } from '../../stores/homeStore';
+import { useCalendarStore } from '../../stores/calendarStore';
 import { getGreeting } from '../../utils/helpers';
 import { Header } from '../layout/Header';
 import { StatusBar } from '../layout/StatusBar';
@@ -22,6 +26,11 @@ import { FoodList } from '../food/FoodList';
 import { RelationshipList } from '../relationships/RelationshipList';
 import { InsuranceList } from '../insurance/InsuranceList';
 import { TravelList } from '../travel/TravelList';
+import { HealthList } from '../health/HealthList';
+import { LearningList } from '../learning/LearningList';
+import { HomeList } from '../home/HomeList';
+import { CalendarView } from '../calendar/CalendarView';
+import { StatsView } from '../stats/StatsView';
 
 export const Dashboard: React.FC = () => {
   const { user } = useAuthStore();
@@ -34,6 +43,10 @@ export const Dashboard: React.FC = () => {
   const { loadEntries: loadRelationshipEntries } = useRelationshipStore();
   const { loadEntries: loadInsuranceEntries } = useInsuranceStore();
   const { loadEntries: loadTravelEntries } = useTravelStore();
+  const { loadEntries: loadHealthEntries } = useHealthStore();
+  const { loadSubjects } = useLearningStore();
+  const { loadEntries: loadHomeEntries } = useHomeStore();
+  const { loadEvents } = useCalendarStore();
   const [activeModule, setActiveModule] = useState<string>('map');
   
   useEffect(() => {
@@ -47,7 +60,11 @@ export const Dashboard: React.FC = () => {
     loadRelationshipEntries();
     loadInsuranceEntries();
     loadTravelEntries();
-  }, [loadGameState, loadTasks, loadHabits, loadEntries, loadFinanceEntries, loadRecipes, loadRelationshipEntries, loadInsuranceEntries, loadTravelEntries]);
+    loadHealthEntries();
+    loadSubjects();
+    loadHomeEntries();
+    loadEvents();
+  }, [loadGameState, loadTasks, loadHabits, loadEntries, loadFinanceEntries, loadRecipes, loadRelationshipEntries, loadInsuranceEntries, loadTravelEntries, loadHealthEntries, loadSubjects, loadHomeEntries, loadEvents]);
   
   const handleModuleChange = (module: string) => {
     setActiveModule(module);
@@ -86,13 +103,7 @@ export const Dashboard: React.FC = () => {
           
           {activeModule === 'tasks' && <TaskList />}
           
-          {activeModule === 'calendar' && (
-            <div className="text-center py-12">
-              <div className="text-6xl mb-4">📅</div>
-              <h3 className="text-2xl font-bold text-matcha-dark mb-2">Kalendář</h3>
-              <p className="text-gray-600">Brzy k dispozici...</p>
-            </div>
-          )}
+          {activeModule === 'calendar' && <CalendarView />}
           
           {activeModule === 'habits' && <HabitList />}
           
@@ -108,28 +119,26 @@ export const Dashboard: React.FC = () => {
           
           {activeModule === 'travel' && <TravelList />}
           
+          {activeModule === 'health' && <HealthList />}
+          
+          {activeModule === 'learning' && <LearningList />}
+          
+          {activeModule === 'home' && <HomeList />}
+          
+          {activeModule === 'stats' && <StatsView />}
+          
           {activeModule === 'more' && (
             <div className="text-center py-12">
               <div className="text-6xl mb-4">≡</div>
               <h3 className="text-2xl font-bold text-matcha-dark mb-2">Další moduly</h3>
-              <p className="text-gray-600">Více modulů brzy k dispozici...</p>
-            </div>
-          )}
-          
-          {/* Other modules */}
-          {['learning', 'home', 'health'].includes(activeModule) && (
-            <div className="text-center py-12">
-              <div className="text-6xl mb-4">🏗️</div>
-              <h3 className="text-2xl font-bold text-matcha-dark mb-2">
-                {activeModule.charAt(0).toUpperCase() + activeModule.slice(1)}
-              </h3>
-              <p className="text-gray-600">Tento modul je ve vývoji</p>
-              <button
-                onClick={() => setActiveModule('map')}
-                className="mt-4 px-6 py-2 bg-gradient-to-r from-matcha-dark to-[#8BAA7E] text-white rounded-kawaii hover:scale-105 hover:shadow-lg transition-all duration-200 active:scale-[0.98]"
-              >
-                Zpět na mapu
-              </button>
+              <div className="max-w-md mx-auto space-y-4 mt-6">
+                <button
+                  onClick={() => setActiveModule('stats')}
+                  className="w-full px-6 py-4 bg-gradient-to-r from-matcha-dark to-[#8BAA7E] text-white rounded-kawaii hover:scale-105 hover:shadow-lg transition-all duration-200 active:scale-[0.98] text-lg font-medium"
+                >
+                  📊 Statistiky
+                </button>
+              </div>
             </div>
           )}
         </div>
