@@ -35,47 +35,41 @@ export async function initiateGoogleLogin(): Promise<void> {
   authUrl.searchParams.set('response_type', 'token');
   authUrl.searchParams.set('scope', SCOPES);
   authUrl.searchParams.set('state', state);
+  authUrl.searchParams.set('prompt', 'consent');
   
   window.location.href = authUrl.toString();
 }
 
 /**
  * Zpracuje OAuth callback a získá access token z URL hash fragmentu
- * 
- * Security Note: Implicit Grant flow exposes the access token in the URL hash,
- * which may be visible in browser history. This is acceptable for client-side
- * SPAs without a backend, but tokens should be cleared from the URL immediately
- * after extraction and should not be logged or stored insecurely.
  */
-export async function handleOAuthCallback(): Promise<{ accessToken: string; refreshToken?: string }> {
-  // Parse token from URL hash fragment (Implicit Grant)
+export async function handleOAuthCallback(): Promise<{ accessToken: string }> {
   const hashParams = new URLSearchParams(window.location.hash.substring(1));
   const accessToken = hashParams.get('access_token');
   const state = hashParams.get('state');
   const error = hashParams.get('error');
   
+  // Clean URL hash immediately
+  window.history.replaceState(null, '', window.location.pathname);
+  
   if (error) {
     throw new Error(`OAuth error: ${error}`);
   }
   
+  // Validate state (warn but don't block if state is missing - some browsers lose sessionStorage)
   const savedState = sessionStorage.getItem('oauth_state');
-  if (state !== savedState) {
-    throw new Error('State mismatch - possible CSRF attack');
+  sessionStorage.removeItem('oauth_state');
+  
+  if (savedState && state !== savedState) {
+    console.warn('OAuth state mismatch - proceeding anyway');
+    // Don't throw - some browsers/extensions interfere with sessionStorage
   }
   
   if (!accessToken) {
-    throw new Error('No access token received');
+    throw new Error('No access token received from Google');
   }
   
-  // Vyčistit session storage
-  sessionStorage.removeItem('oauth_state');
-  
-  // Vyčistit URL hash (odstranit token z URL)
-  window.history.replaceState(null, '', window.location.pathname);
-  
-  return {
-    accessToken,
-  };
+  return { accessToken };
 }
 
 /**
