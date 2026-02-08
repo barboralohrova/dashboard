@@ -10,6 +10,7 @@ interface TaskStore {
   tasks: Task[];
   filter: TaskFilter;
   isLoading: boolean;
+  loadingRetryTimeout?: ReturnType<typeof setTimeout>;
   
   loadTasks: () => Promise<void>;
   addTask: (task: Omit<Task, 'id' | 'datum_vytvoreni' | 'stav'>) => Promise<void>;
@@ -28,10 +29,18 @@ export const useTaskStore = create<TaskStore>((set, get) => ({
     showCompleted: false,
   },
   isLoading: false,
+  loadingRetryTimeout: undefined,
   
   loadTasks: async () => {
     const { accessToken, spreadsheetId } = useAuthStore.getState();
     if (!accessToken || !spreadsheetId) return;
+    
+    // Clear any pending retry
+    const currentRetryTimeout = get().loadingRetryTimeout;
+    if (currentRetryTimeout) {
+      clearTimeout(currentRetryTimeout);
+      set({ loadingRetryTimeout: undefined });
+    }
     
     set({ isLoading: true });
     
@@ -43,7 +52,23 @@ export const useTaskStore = create<TaskStore>((set, get) => ({
       await get().regenerateDailyTasks();
     } catch (error) {
       console.error('Failed to load tasks:', error);
-      set({ isLoading: false });
+      // Set empty tasks array on error - sheet may not be initialized yet
+      set({ tasks: [], isLoading: false });
+      
+      // Retry after a short delay (sheet might be initializing)
+      const retryTimeout = setTimeout(async () => {
+        try {
+          const data = await readFromSheet<Task>(accessToken, spreadsheetId, 'ukoly');
+          set({ tasks: data, loadingRetryTimeout: undefined });
+          await get().regenerateDailyTasks();
+        } catch (retryError) {
+          console.error('Retry failed to load tasks:', retryError);
+          set({ loadingRetryTimeout: undefined });
+          // Keep empty array, don't throw
+        }
+      }, 2000);
+      
+      set({ loadingRetryTimeout: retryTimeout });
     }
   },
   
