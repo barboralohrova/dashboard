@@ -2,15 +2,6 @@ import React from 'react';
 import { useGameStore } from '../../stores/gameStore';
 import type { ListkaState } from '../../types';
 
-const LISTKA_EMOJIS: Record<ListkaState, string> = {
-  happy: '😊',
-  sleepy: '😴',
-  sad: '😢',
-  excited: '🎉',
-  shining: '🌟',
-  determined: '💪',
-};
-
 const LISTKA_MESSAGES: Record<ListkaState, string> = {
   happy: 'Jsi skvělý!',
   sleepy: 'Dneska už jsi odpočívala...',
