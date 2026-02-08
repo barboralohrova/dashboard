@@ -5,25 +5,33 @@ interface Building {
   id: string;
   name: string;
   icon: string;
-  x: number;
-  y: number;
   module: string;
+  category: 'tasks' | 'finance' | 'food' | 'personal' | 'travel' | 'home';
 }
 
 const BUILDINGS: Building[] = [
-  { id: 'tasks', name: 'Nástěnka u studny', icon: '📋', x: 20, y: 30, module: 'tasks' },
-  { id: 'calendar', name: 'Rozhledna', icon: '📅', x: 75, y: 20, module: 'calendar' },
-  { id: 'finance', name: 'Strom moudrosti', icon: '💰', x: 50, y: 15, module: 'finance' },
-  { id: 'food', name: 'Kuchyňka', icon: '🍳', x: 30, y: 60, module: 'food' },
-  { id: 'diary', name: 'Tajný deníček', icon: '📝', x: 70, y: 65, module: 'diary' },
-  { id: 'habits', name: 'Tréninková loučka', icon: '🏋️', x: 15, y: 75, module: 'habits' },
-  { id: 'learning', name: 'Jeskyně poznání', icon: '⛰️', x: 85, y: 50, module: 'learning' },
-  { id: 'home', name: 'Chaloupka', icon: '🏡', x: 45, y: 45, module: 'home' },
-  { id: 'health', name: 'Bylinkářka', icon: '🌸', x: 60, y: 75, module: 'health' },
-  { id: 'relationships', name: 'Poštovní budka', icon: '👥', x: 35, y: 25, module: 'relationships' },
-  { id: 'insurance', name: 'Strážní věž', icon: '🛡️', x: 80, y: 80, module: 'insurance' },
-  { id: 'travel', name: 'Cestovatelský kůl', icon: '🧳', x: 25, y: 50, module: 'travel' },
+  { id: 'tasks', name: 'Nástěnka u studny', icon: '📋', module: 'tasks', category: 'tasks' },
+  { id: 'calendar', name: 'Rozhledna', icon: '📅', module: 'calendar', category: 'tasks' },
+  { id: 'finance', name: 'Strom moudrosti', icon: '💰', module: 'finance', category: 'finance' },
+  { id: 'food', name: 'Kuchyňka', icon: '🍳', module: 'food', category: 'food' },
+  { id: 'diary', name: 'Tajný deníček', icon: '📝', module: 'diary', category: 'personal' },
+  { id: 'habits', name: 'Tréninková loučka', icon: '🏋️', module: 'habits', category: 'home' },
+  { id: 'learning', name: 'Jeskyně poznání', icon: '⛰️', module: 'learning', category: 'home' },
+  { id: 'home', name: 'Chaloupka', icon: '🏡', module: 'home', category: 'home' },
+  { id: 'health', name: 'Bylinkářka', icon: '🌸', module: 'health', category: 'food' },
+  { id: 'relationships', name: 'Poštovní budka', icon: '👥', module: 'relationships', category: 'personal' },
+  { id: 'insurance', name: 'Strážní věž', icon: '🛡️', module: 'insurance', category: 'travel' },
+  { id: 'travel', name: 'Cestovatelský kůl', icon: '🧳', module: 'travel', category: 'travel' },
 ];
+
+const CATEGORY_COLORS = {
+  tasks: 'bg-blue-50 hover:bg-blue-100',
+  finance: 'bg-yellow-50 hover:bg-yellow-100',
+  food: 'bg-green-50 hover:bg-green-100',
+  personal: 'bg-pink-50 hover:bg-pink-100',
+  travel: 'bg-purple-50 hover:bg-purple-100',
+  home: 'bg-orange-50 hover:bg-orange-100',
+};
 
 interface EmeraldMapProps {
   onBuildingClick: (module: string) => void;
@@ -31,7 +39,6 @@ interface EmeraldMapProps {
 
 export const EmeraldMap: React.FC<EmeraldMapProps> = ({ onBuildingClick }) => {
   const dayPeriod = getDayPeriod();
-  const [hoveredBuilding, setHoveredBuilding] = React.useState<string | null>(null);
   
   // Background colors based on day period
   const bgGradients = {
@@ -44,92 +51,85 @@ export const EmeraldMap: React.FC<EmeraldMapProps> = ({ onBuildingClick }) => {
   const textColor = dayPeriod === 'night' ? 'text-white' : 'text-text-dark';
   
   return (
-    <div className={`relative w-full h-[600px] rounded-kawaii overflow-hidden bg-gradient-to-br ${bgGradients[dayPeriod]} shadow-xl`}>
-      {/* Decorative elements */}
-      <div className="absolute inset-0">
+    <div className={`relative w-full min-h-[50vh] md:min-h-[60vh] rounded-kawaii overflow-hidden bg-gradient-to-br ${bgGradients[dayPeriod]} shadow-xl p-6 md:p-8`}>
+      {/* Decorative elements - positioned in corners */}
+      <div className="absolute inset-0 pointer-events-none">
         {/* Trees */}
-        <div className="absolute left-[10%] top-[40%] text-6xl animate-pulse" style={{ animationDuration: '4s' }}>
+        <div className="absolute left-4 top-4 text-4xl md:text-5xl animate-pulse opacity-40" style={{ animationDuration: '4s' }}>
           🌲
         </div>
-        <div className="absolute right-[15%] top-[30%] text-5xl animate-pulse" style={{ animationDuration: '5s' }}>
+        <div className="absolute right-4 top-4 text-3xl md:text-4xl animate-pulse opacity-40" style={{ animationDuration: '5s' }}>
           🌳
         </div>
-        <div className="absolute left-[5%] bottom-[20%] text-5xl animate-pulse" style={{ animationDuration: '6s' }}>
+        <div className="absolute left-4 bottom-4 text-3xl md:text-4xl animate-pulse opacity-40" style={{ animationDuration: '6s' }}>
           🌲
+        </div>
+        <div className="absolute right-4 bottom-4 text-4xl md:text-5xl animate-pulse opacity-40" style={{ animationDuration: '5.5s' }}>
+          🌳
         </div>
         
         {/* Stars at night */}
         {dayPeriod === 'night' && (
           <>
-            <div className="absolute left-[20%] top-[10%] text-2xl animate-pulse">⭐</div>
-            <div className="absolute right-[30%] top-[15%] text-xl animate-pulse">✨</div>
-            <div className="absolute left-[60%] top-[8%] text-2xl animate-pulse">⭐</div>
-            <div className="absolute right-[10%] top-[20%] text-xl animate-pulse">✨</div>
+            <div className="absolute left-[20%] top-[15%] text-xl animate-pulse">⭐</div>
+            <div className="absolute right-[25%] top-[20%] text-lg animate-pulse">✨</div>
+            <div className="absolute left-[70%] top-[10%] text-xl animate-pulse">⭐</div>
+            <div className="absolute right-[15%] top-[25%] text-lg animate-pulse">✨</div>
           </>
         )}
         
         {/* Sun/Moon */}
-        <div className="absolute right-[10%] top-[10%] text-5xl">
+        <div className="absolute right-[10%] top-[10%] text-4xl md:text-5xl">
           {dayPeriod === 'night' ? '🌙' : '☀️'}
         </div>
       </div>
       
-      {/* Buildings */}
-      {BUILDINGS.map((building) => (
-        <div
-          key={building.id}
-          className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer transition-all duration-200"
-          style={{
-            left: `${building.x}%`,
-            top: `${building.y}%`,
-            transform: hoveredBuilding === building.id ? 'translate(-50%, -50%) scale(1.2)' : 'translate(-50%, -50%)',
-          }}
-          onMouseEnter={() => setHoveredBuilding(building.id)}
-          onMouseLeave={() => setHoveredBuilding(null)}
-          onClick={() => onBuildingClick(building.module)}
+      {/* Lístka avatar floating at top center */}
+      <div className="flex justify-center mb-6 relative z-10">
+        <div 
+          className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-white flex items-center justify-center shadow-xl"
+          style={{ animation: 'float 3s ease-in-out infinite' }}
         >
-          <div className="relative">
-            {/* Building icon */}
-            <div className={`text-6xl ${hoveredBuilding === building.id ? 'drop-shadow-2xl' : ''}`}>
-              {building.icon}
-            </div>
-            
-            {/* Tooltip on hover */}
-            {hoveredBuilding === building.id && (
-              <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-4 py-2 bg-white rounded-kawaii shadow-lg whitespace-nowrap z-10">
-                <p className="text-sm font-semibold text-matcha-dark">{building.name}</p>
-              </div>
-            )}
-            
-            {/* Glow effect on hover */}
-            {hoveredBuilding === building.id && (
-              <div className="absolute inset-0 bg-yellow-300 opacity-30 blur-xl rounded-full -z-10" />
-            )}
-          </div>
+          <img 
+            src="/dashboard/listka-avatar.png" 
+            alt="Lístka" 
+            className="w-full h-full rounded-full object-cover"
+          />
         </div>
-      ))}
-      
-      {/* Listka Avatar */}
-      <div className="absolute left-[50%] top-[50%] transform -translate-x-1/2 -translate-y-1/2 text-6xl animate-bounce pointer-events-none" style={{ animationDuration: '3s' }}>
-        🍃
       </div>
       
       {/* Period indicator */}
-      <div className={`absolute top-4 left-4 px-4 py-2 rounded-kawaii bg-white bg-opacity-70 ${textColor}`}>
-        <p className="text-sm font-medium">
-          {dayPeriod === 'morning' && '🌅 Ráno'}
-          {dayPeriod === 'day' && '☀️ Den'}
-          {dayPeriod === 'evening' && '🌅 Podvečer'}
-          {dayPeriod === 'night' && '🌙 Noc'}
-        </p>
+      <div className={`absolute top-4 right-4 px-3 py-1.5 rounded-full bg-white/80 backdrop-blur-sm ${textColor} text-xs md:text-sm font-medium shadow-md z-10`}>
+        {dayPeriod === 'morning' && '🌅 Ráno'}
+        {dayPeriod === 'day' && '☀️ Den'}
+        {dayPeriod === 'evening' && '🌅 Podvečer'}
+        {dayPeriod === 'night' && '🌙 Noc'}
+      </div>
+      
+      {/* Buildings Grid */}
+      <div className="relative z-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+        {BUILDINGS.map((building) => (
+          <button
+            key={building.id}
+            onClick={() => onBuildingClick(building.module)}
+            className={`${CATEGORY_COLORS[building.category]} rounded-kawaii p-4 md:p-6 shadow-md hover:shadow-xl transition-all duration-200 hover:scale-105 active:scale-95 flex flex-col items-center justify-center min-h-[120px] md:min-h-[140px]`}
+          >
+            <div className="text-4xl md:text-5xl mb-2">
+              {building.icon}
+            </div>
+            <p className="text-xs md:text-sm font-semibold text-matcha-dark text-center leading-tight">
+              {building.name}
+            </p>
+          </button>
+        ))}
       </div>
       
       {/* Welcome message */}
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-center">
-        <p className={`text-xl font-bold ${dayPeriod === 'night' ? 'text-white' : 'text-matcha-dark'} drop-shadow-lg`}>
+      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-center z-10">
+        <p className={`text-lg md:text-xl font-bold ${dayPeriod === 'night' ? 'text-white' : 'text-matcha-dark'} drop-shadow-lg`}>
           Vesnice Emerald
         </p>
-        <p className={`text-sm ${dayPeriod === 'night' ? 'text-gray-300' : 'text-gray-600'}`}>
+        <p className={`text-xs md:text-sm ${dayPeriod === 'night' ? 'text-gray-300' : 'text-gray-600'}`}>
           Klikni na budovu pro vstup
         </p>
       </div>

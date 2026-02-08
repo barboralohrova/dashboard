@@ -15,15 +15,15 @@ const NAV_ITEMS = [
 
 export const BottomNav: React.FC<BottomNavProps> = ({ activeModule, onModuleChange }) => {
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-2 py-3 md:hidden z-50">
+    <nav className="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t border-gray-200 px-2 py-3 md:hidden z-50" style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}>
       <div className="flex items-center justify-around max-w-md mx-auto">
         {NAV_ITEMS.map((item) => (
           <button
             key={item.id}
             onClick={() => onModuleChange(item.id)}
-            className={`flex flex-col items-center space-y-1 px-3 py-2 rounded-kawaii transition-colors ${
+            className={`flex flex-col items-center space-y-1 px-3 py-2 rounded-kawaii transition-all duration-200 min-w-[44px] min-h-[44px] ${
               activeModule === item.id
-                ? 'text-matcha-dark bg-matcha-light'
+                ? 'text-matcha-dark bg-matcha-light/50'
                 : 'text-gray-500 hover:text-matcha-dark'
             }`}
           >

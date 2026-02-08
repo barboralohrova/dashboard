@@ -1,0 +1,35 @@
+<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle (transparent in actual use) -->
+  <circle cx="256" cy="256" r="256" fill="transparent"/>
+  
+  <!-- Green hair/head -->
+  <circle cx="256" cy="220" r="120" fill="#7C9A6E"/>
+  
+  <!-- Face -->
+  <circle cx="256" cy="240" r="80" fill="#B4D4A0"/>
+  
+  <!-- Ears (pointed) -->
+  <path d="M 160 220 L 140 200 L 155 230 Z" fill="#8BAA7E"/>
+  <path d="M 352 220 L 372 200 L 357 230 Z" fill="#8BAA7E"/>
+  
+  <!-- Eyes -->
+  <circle cx="235" cy="230" r="8" fill="#4A4A3F"/>
+  <circle cx="277" cy="230" r="8" fill="#4A4A3F"/>
+  <circle cx="237" cy="228" r="3" fill="white"/>
+  <circle cx="279" cy="228" r="3" fill="white"/>
+  
+  <!-- Smile -->
+  <path d="M 230 250 Q 256 265 282 250" stroke="#4A4A3F" stroke-width="3" fill="none" stroke-linecap="round"/>
+  
+  <!-- Flowers in hair -->
+  <circle cx="200" cy="180" r="12" fill="#E8B4B8"/>
+  <circle cx="312" cy="180" r="12" fill="#E8B4B8"/>
+  <circle cx="256" cy="160" r="10" fill="#D4A574"/>
+  
+  <!-- Cape -->
+  <path d="M 200 280 L 180 400 L 256 380 L 332 400 L 312 280 Z" fill="#7C9A6E" opacity="0.8"/>
+  
+  <!-- Acorn belt -->
+  <rect x="226" y="285" width="60" height="10" rx="5" fill="#8B4513"/>
+  <ellipse cx="256" cy="285" rx="8" ry="10" fill="#D4A574"/>
+</svg>

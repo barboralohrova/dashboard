@@ -10,8 +10,17 @@ export const LandingPage: React.FC = () => {
       <div className="max-w-2xl w-full text-center">
         {/* Hero Section */}
         <div className="mb-12">
-          <div className="text-8xl mb-6 animate-bounce" style={{ animationDuration: '3s' }}>
-            🌿
+          <div className="flex justify-center mb-6">
+            <div 
+              className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-white flex items-center justify-center shadow-xl"
+              style={{ animation: 'float 3s ease-in-out infinite' }}
+            >
+              <img 
+                src="/dashboard/listka-avatar.png" 
+                alt="Lístka" 
+                className="w-full h-full rounded-full object-cover"
+              />
+            </div>
           </div>
           <h1 className="text-5xl md:text-6xl font-bold text-matcha-dark mb-4">
             Forest Dashboard
@@ -26,19 +35,19 @@ export const LandingPage: React.FC = () => {
         
         {/* Features */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          <div className="bg-white rounded-kawaii p-6 shadow-lg">
+          <div className="bg-white/80 backdrop-blur-sm rounded-kawaii p-6 shadow-lg hover:shadow-xl transition-shadow">
             <div className="text-4xl mb-3">📋</div>
             <h3 className="font-semibold text-matcha-dark mb-2">Úkoly & Organizace</h3>
             <p className="text-sm text-gray-600">Spravuj své úkoly a získávej XP za splnění</p>
           </div>
           
-          <div className="bg-white rounded-kawaii p-6 shadow-lg">
+          <div className="bg-white/80 backdrop-blur-sm rounded-kawaii p-6 shadow-lg hover:shadow-xl transition-shadow">
             <div className="text-4xl mb-3">⭐</div>
             <h3 className="font-semibold text-matcha-dark mb-2">Levelování</h3>
             <p className="text-sm text-gray-600">Rostoucí s tebou, odemykej nová zvířátka</p>
           </div>
           
-          <div className="bg-white rounded-kawaii p-6 shadow-lg">
+          <div className="bg-white/80 backdrop-blur-sm rounded-kawaii p-6 shadow-lg hover:shadow-xl transition-shadow">
             <div className="text-4xl mb-3">🏘️</div>
             <h3 className="font-semibold text-matcha-dark mb-2">Vesnice Emerald</h3>
             <p className="text-sm text-gray-600">Interaktivní mapa s tvými životními oblastmi</p>
@@ -46,7 +55,7 @@ export const LandingPage: React.FC = () => {
         </div>
         
         {/* Login Section */}
-        <div className="bg-white rounded-kawaii p-8 shadow-xl">
+        <div className="bg-white/90 backdrop-blur-sm rounded-kawaii p-8 shadow-xl">
           <div className="mb-6">
             <p className="text-gray-700 mb-4">
               Připoj se k Lístce a začni svou cestu lesní vesnicí

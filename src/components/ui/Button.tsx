@@ -13,12 +13,12 @@ export const Button: React.FC<ButtonProps> = ({
   className = '',
   ...props
 }) => {
-  const baseClasses = 'rounded-kawaii font-medium transition-all duration-200 hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed';
+  const baseClasses = 'rounded-kawaii font-medium transition-all duration-200 hover:scale-105 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed';
   
   const variantClasses = {
-    primary: 'bg-matcha-dark text-white hover:bg-opacity-90',
+    primary: 'bg-gradient-to-r from-matcha-dark to-[#8BAA7E] text-white hover:shadow-lg',
     secondary: 'bg-matcha-light text-text-dark hover:bg-opacity-90',
-    accent: 'bg-accent text-white hover:bg-opacity-90',
+    accent: 'bg-accent text-white hover:bg-opacity-90 hover:shadow-md',
     outline: 'border-2 border-matcha-dark text-matcha-dark hover:bg-matcha-dark hover:text-white',
   };
   
