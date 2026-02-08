@@ -1,11 +1,25 @@
 import React, { useState } from 'react';
-import type { HealthEntryType } from '../../types';
+import type { ZdraviEntry } from '../../types';
 import { Modal, Button, Input } from '../ui';
+
+type HealthEntryType = ZdraviEntry['typ'];
+
+interface HealthFormData {
+  typ: HealthEntryType;
+  nazev: string;
+  datum: string;
+  popis?: string;
+  lekar?: string;
+  vysledek?: string;
+  dalsi_termin?: string;
+  kategorie: string;
+  tagy: string[];
+}
 
 interface HealthFormProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (entry: any) => void;
+  onSubmit: (entry: HealthFormData) => void;
 }
 
 const CATEGORIES = [

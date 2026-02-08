@@ -1,10 +1,24 @@
 import React, { useState } from 'react';
+import type { CalendarEvent } from '../../types';
 import { Modal, Button, Input } from '../ui';
+
+interface CalendarEventFormData {
+  nazev: string;
+  datum_zacatek: string;
+  datum_konec: string;
+  cely_den: boolean;
+  lokace?: string;
+  popis?: string;
+  barva: string;
+  zdroj?: CalendarEvent['zdroj'];
+  pripominka_min?: number;
+  propojeny_ukol_id?: string;
+}
 
 interface CalendarEventFormProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (event: any) => void;
+  onSubmit: (event: CalendarEventFormData) => void;
   defaultDate?: string;
 }
 

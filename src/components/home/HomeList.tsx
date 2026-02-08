@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import type { HomeTaskType } from '../../types';
+import type { DomacnostEntry } from '../../types';
 import { useHomeStore } from '../../stores/homeStore';
 import { HomeCard } from './HomeCard';
 import { HomeForm } from './HomeForm';
@@ -48,7 +48,7 @@ export const HomeList: React.FC = () => {
     return 0;
   });
   
-  const handleAddEntry = async (entryData: any) => {
+  const handleAddEntry = async (entryData: Omit<DomacnostEntry, 'id' | 'vytvoreno'>) => {
     try {
       await useHomeStore.getState().addEntry(entryData);
       setIsFormOpen(false);

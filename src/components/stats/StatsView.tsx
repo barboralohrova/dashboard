@@ -44,7 +44,6 @@ export const StatsView: React.FC = () => {
     t.stav === 'splneno' && 
     (timeRange === 'all' || new Date(t.datum_splneni || '') >= startDate)
   );
-  const activeTasks = tasks.filter(t => t.stav === 'aktivni');
   const taskCompletionRate = tasks.length > 0 
     ? Math.round((completedTasks.length / tasks.length) * 100) 
     : 0;
@@ -76,15 +75,15 @@ export const StatsView: React.FC = () => {
   
   // Best habit streak
   const habitStreaks = habits.map(habit => {
-    const habitLogs = habitLogs
+    const habitLogsFiltered = habitLogs
       .filter(log => log.navyk_id === habit.id && log.splneno)
       .sort((a, b) => new Date(b.datum).getTime() - new Date(a.datum).getTime());
     
     let streak = 0;
-    let checkDate = new Date();
+    const checkDate = new Date();
     checkDate.setHours(0, 0, 0, 0);
     
-    for (const log of habitLogs) {
+    for (const log of habitLogsFiltered) {
       const logDate = new Date(log.datum);
       logDate.setHours(0, 0, 0, 0);
       

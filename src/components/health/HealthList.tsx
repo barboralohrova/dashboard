@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import type { HealthEntryType } from '../../types';
+import type { HealthEntryType, ZdraviEntry } from '../../types';
 import { useHealthStore } from '../../stores/healthStore';
 import { HealthCard } from './HealthCard';
 import { HealthForm } from './HealthForm';
@@ -20,7 +20,7 @@ export const HealthList: React.FC = () => {
     return new Date(b.datum).getTime() - new Date(a.datum).getTime();
   });
   
-  const handleAddEntry = async (entryData: any) => {
+  const handleAddEntry = async (entryData: Omit<ZdraviEntry, 'id' | 'vytvoreno'>) => {
     try {
       await useHealthStore.getState().addEntry(entryData);
       setIsFormOpen(false);

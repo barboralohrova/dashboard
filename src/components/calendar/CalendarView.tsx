@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useCalendarStore } from '../../stores/calendarStore';
 import { CalendarEventCard } from './CalendarEventCard';
 import { CalendarEventForm } from './CalendarEventForm';
@@ -7,12 +7,11 @@ import { Button } from '../ui';
 const DAYS_OF_WEEK = ['Po', 'Út', 'St', 'Čt', 'Pá', 'So', 'Ne'];
 
 export const CalendarView: React.FC = () => {
-  const { events, selectedDate, setSelectedDate, getEventsForDate, getEventsForMonth, isLoading, deleteEvent } = useCalendarStore();
+  const { events, selectedDate, setSelectedDate, getEventsForDate, isLoading, deleteEvent } = useCalendarStore();
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   
-  const monthEvents = getEventsForMonth(currentYear, currentMonth);
   const selectedDateEvents = getEventsForDate(selectedDate);
   
   const getDaysInMonth = (year: number, month: number) => {
@@ -90,9 +89,20 @@ export const CalendarView: React.FC = () => {
     'Červenec', 'Srpen', 'Září', 'Říjen', 'Listopad', 'Prosinec'
   ];
   
-  const handleAddEvent = async (eventData: any) => {
+  const handleAddEvent = async (eventData: {
+    nazev: string;
+    datum_zacatek: string;
+    datum_konec: string;
+    cely_den: boolean;
+    lokace?: string;
+    popis?: string;
+    barva: string;
+  }) => {
     try {
-      await useCalendarStore.getState().addEvent(eventData);
+      await useCalendarStore.getState().addEvent({
+        ...eventData,
+        zdroj: 'manual',
+      });
       setIsFormOpen(false);
     } catch (error) {
       console.error('Failed to add event:', error);

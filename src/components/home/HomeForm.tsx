@@ -1,11 +1,23 @@
 import React, { useState } from 'react';
-import type { HomeTaskType } from '../../types';
+import type { DomacnostEntry } from '../../types';
 import { Modal, Button, Input } from '../ui';
+
+type HomeTaskType = DomacnostEntry['typ'];
+
+interface HomeFormData {
+  nazev: string;
+  typ: HomeTaskType;
+  frekvence: 'jednorázový' | 'denní' | 'týdenní' | 'měsíční' | 'roční';
+  priorita: 'nízká' | 'střední' | 'vysoká';
+  mistnost?: string;
+  dalsi_termin?: string;
+  poznamka?: string;
+}
 
 interface HomeFormProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (entry: any) => void;
+  onSubmit: (entry: HomeFormData) => void;
 }
 
 const ROOMS = ['Kuchyň', 'Koupelna', 'Obývák', 'Ložnice', 'Chodba', 'Venku', 'Ostatní'];
