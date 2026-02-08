@@ -85,8 +85,9 @@ export const useAuthStore = create<AuthStore>((set) => ({
           spreadsheetId: localStorage.getItem('spreadsheet_id'),
           isAuthenticated: true,
         });
-      } catch {
+      } catch (error) {
         // Token expired or invalid, clear saved data
+        console.error('Session restoration failed:', error);
         sessionStorage.removeItem('access_token');
         sessionStorage.removeItem('user_data');
       }
