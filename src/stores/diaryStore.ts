@@ -35,11 +35,11 @@ export const useDiaryStore = create<DiaryStore>((set, get) => ({
     set({ isLoading: true });
     
     try {
-      const data = await readFromSheet<any>(accessToken, spreadsheetId, 'denik');
+      const data = await readFromSheet<Record<string, string>>(accessToken, spreadsheetId, 'denik');
       
       // Parse tags from comma-separated string to array
-      const entries: DenikEntry[] = data.map((row: any) => ({
-        ...row,
+      const entries: DenikEntry[] = data.map((row: Record<string, string>) => ({
+        ...(row as unknown as DenikEntry),
         tagy: row.tagy ? row.tagy.split(',').map((t: string) => t.trim()).filter(Boolean) : [],
       }));
       
@@ -51,9 +51,9 @@ export const useDiaryStore = create<DiaryStore>((set, get) => ({
       // Retry after a short delay (sheet might be initializing)
       const retryTimeout = setTimeout(async () => {
         try {
-          const data = await readFromSheet<any>(accessToken, spreadsheetId, 'denik');
-          const entries: DenikEntry[] = data.map((row: any) => ({
-            ...row,
+          const data = await readFromSheet<Record<string, string>>(accessToken, spreadsheetId, 'denik');
+          const entries: DenikEntry[] = data.map((row: Record<string, string>) => ({
+            ...(row as unknown as DenikEntry),
             tagy: row.tagy ? row.tagy.split(',').map((t: string) => t.trim()).filter(Boolean) : [],
           }));
           set({ entries, loadingRetryTimeout: undefined });

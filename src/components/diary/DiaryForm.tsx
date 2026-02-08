@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import type { DenikMood } from '../../types';
+import type { DenikMood, DenikEntry } from '../../types';
 import { Modal, Button, Input } from '../ui';
 
 interface DiaryFormProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (entry: any) => void;
+  onSubmit: (entry: Omit<DenikEntry, 'id' | 'vytvoreno' | 'upraveno'>) => void;
 }
 
 const MOOD_OPTIONS: { mood: DenikMood; emoji: string; label: string }[] = [

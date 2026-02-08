@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import type { MealType } from '../../types';
+import type { MealType, JidloEntry } from '../../types';
 import { Modal, Button, Input } from '../ui';
 
 interface FoodFormProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (recipe: any) => void;
+  onSubmit: (recipe: Omit<JidloEntry, 'id' | 'datum_pridani'>) => void;
 }
 
 const MEAL_TYPES: { type: MealType; emoji: string; label: string }[] = [

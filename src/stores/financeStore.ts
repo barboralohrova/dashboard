@@ -36,11 +36,11 @@ export const useFinanceStore = create<FinanceStore>((set, get) => ({
     set({ isLoading: true });
     
     try {
-      const data = await readFromSheet<any>(accessToken, spreadsheetId, 'finance');
+      const data = await readFromSheet<Record<string, string>>(accessToken, spreadsheetId, 'finance');
       
       // Parse castka to number
-      const entries: FinanceEntry[] = data.map((row: any) => ({
-        ...row,
+      const entries: FinanceEntry[] = data.map((row: Record<string, string>) => ({
+        ...(row as unknown as FinanceEntry),
         castka: parseFloat(row.castka) || 0,
       }));
       
@@ -52,9 +52,9 @@ export const useFinanceStore = create<FinanceStore>((set, get) => ({
       // Retry after a short delay (sheet might be initializing)
       const retryTimeout = setTimeout(async () => {
         try {
-          const data = await readFromSheet<any>(accessToken, spreadsheetId, 'finance');
-          const entries: FinanceEntry[] = data.map((row: any) => ({
-            ...row,
+          const data = await readFromSheet<Record<string, string>>(accessToken, spreadsheetId, 'finance');
+          const entries: FinanceEntry[] = data.map((row: Record<string, string>) => ({
+            ...(row as unknown as FinanceEntry),
             castka: parseFloat(row.castka) || 0,
           }));
           set({ entries, loadingRetryTimeout: undefined });

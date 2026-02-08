@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import type { FinanceType } from '../../types';
+import type { FinanceType, FinanceEntry } from '../../types';
 import { Modal, Button, Input } from '../ui';
 
 interface FinanceFormProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (entry: any) => void;
+  onSubmit: (entry: Omit<FinanceEntry, 'id' | 'vytvoreno'>) => void;
 }
 
 const CATEGORIES = [

@@ -36,18 +36,18 @@ export const useFoodStore = create<FoodStore>((set, get) => ({
     set({ isLoading: true });
     
     try {
-      const data = await readFromSheet<any>(accessToken, spreadsheetId, 'jidlo');
+      const data = await readFromSheet<Record<string, string>>(accessToken, spreadsheetId, 'jidlo');
       
       // Parse ingredience and tagy from comma-separated strings to arrays
       // Parse cas_pripravy and porce to numbers
       // Parse oblibene to boolean
-      const recipes: JidloEntry[] = data.map((row: any) => ({
-        ...row,
+      const recipes: JidloEntry[] = data.map((row: Record<string, string>) => ({
+        ...(row as unknown as JidloEntry),
         ingredience: row.ingredience ? row.ingredience.split(',').map((i: string) => i.trim()).filter(Boolean) : [],
         tagy: row.tagy ? row.tagy.split(',').map((t: string) => t.trim()).filter(Boolean) : [],
         cas_pripravy: parseInt(row.cas_pripravy) || 0,
         porce: parseInt(row.porce) || 1,
-        oblibene: row.oblibene === 'true' || row.oblibene === true,
+        oblibene: row.oblibene === 'true' || row.oblibene === 'true',
       }));
       
       set({ recipes, isLoading: false });
@@ -58,14 +58,14 @@ export const useFoodStore = create<FoodStore>((set, get) => ({
       // Retry after a short delay (sheet might be initializing)
       const retryTimeout = setTimeout(async () => {
         try {
-          const data = await readFromSheet<any>(accessToken, spreadsheetId, 'jidlo');
-          const recipes: JidloEntry[] = data.map((row: any) => ({
-            ...row,
+          const data = await readFromSheet<Record<string, string>>(accessToken, spreadsheetId, 'jidlo');
+          const recipes: JidloEntry[] = data.map((row: Record<string, string>) => ({
+            ...(row as unknown as JidloEntry),
             ingredience: row.ingredience ? row.ingredience.split(',').map((i: string) => i.trim()).filter(Boolean) : [],
             tagy: row.tagy ? row.tagy.split(',').map((t: string) => t.trim()).filter(Boolean) : [],
             cas_pripravy: parseInt(row.cas_pripravy) || 0,
             porce: parseInt(row.porce) || 1,
-            oblibene: row.oblibene === 'true' || row.oblibene === true,
+            oblibene: row.oblibene === 'true' || row.oblibene === 'true',
           }));
           set({ recipes, loadingRetryTimeout: undefined });
         } catch (retryError) {
