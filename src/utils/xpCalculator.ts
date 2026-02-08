@@ -1,4 +1,4 @@
-import { TaskComplexity } from '../types';
+import type { TaskComplexity } from '../types';
 
 /**
  * Vypočítá XP potřebné pro dosažení daného levelu

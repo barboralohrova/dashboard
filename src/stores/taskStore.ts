@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { Task, TaskFilter, TaskComplexity, TaskStatus, TaskRepeat } from '../types';
+import type { Task, TaskFilter } from '../types';
 import { generateId, isToday, isSameDay } from '../utils/helpers';
 import { calculateTaskXP } from '../utils/xpCalculator';
 import { readFromSheet, appendToSheet, updateSheetRow } from '../services/googleSheets';

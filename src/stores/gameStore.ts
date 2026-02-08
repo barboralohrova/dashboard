@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { GameState, ListkaState, XPLog } from '../types';
+import type { GameState, ListkaState, XPLog } from '../types';
 import { getLevelFromXP, getStreakMilestoneXP, XP_BONUSES } from '../utils/xpCalculator';
 import { isSameDay, daysBetween, generateId } from '../utils/helpers';
 import { readFromSheet, writeToSheet, appendToSheet } from '../services/googleSheets';
@@ -73,8 +73,8 @@ export const useGameStore = create<GameStore>((set, get) => ({
           xp_celkem: parseInt(gameData.xp_celkem as any),
           streak_aktualni: parseInt(gameData.streak_aktualni as any),
           streak_nejdelsi: parseInt(gameData.streak_nejdelsi as any),
-          odemnuta_stvoreni: gameData.odemnuta_stvoreni ? (gameData.odemnuta_stvoreni as string).split(',').filter(Boolean) : [],
-          odemnute_dekorace: gameData.odemnute_dekorace ? (gameData.odemnute_dekorace as string).split(',').filter(Boolean) : [],
+          odemnuta_stvoreni: gameData.odemnuta_stvoreni ? (gameData.odemnuta_stvoreni as unknown as string).split(',').filter(Boolean) : [],
+          odemnute_dekorace: gameData.odemnute_dekorace ? (gameData.odemnute_dekorace as unknown as string).split(',').filter(Boolean) : [],
         });
         
         get().updateListkaState();

@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { User } from '../types';
+import type { User } from '../types';
 import * as googleAuth from '../services/googleAuth';
 import { initializeSpreadsheet } from '../services/googleSheets';
 
@@ -18,7 +18,7 @@ interface AuthStore {
   setSpreadsheetId: (id: string) => void;
 }
 
-export const useAuthStore = create<AuthStore>((set, get) => ({
+export const useAuthStore = create<AuthStore>((set) => ({
   user: null,
   accessToken: null,
   refreshToken: null,
