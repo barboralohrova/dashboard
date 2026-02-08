@@ -133,3 +133,56 @@ export interface Predmet {
   stav: 'aktivni' | 'ukoncen' | 'neukoncen';
   poznamka?: string;
 }
+
+// Deník (Diary) types
+export interface DenikEntry {
+  id: string;
+  nazev: string;
+  obsah: string;
+  nalada: DenikMood;
+  datum: string;
+  tagy: string[];
+  vytvoreno: string;
+  upraveno: string;
+}
+
+export type DenikMood = 'skvele' | 'dobre' | 'ok' | 'spatne' | 'hrozne';
+
+// Finance types
+export interface FinanceEntry {
+  id: string;
+  typ: FinanceType;
+  castka: number;
+  kategorie: string;
+  popis: string;
+  datum: string;
+  opakovani: 'jednorázový' | 'měsíční' | 'týdenní';
+  vytvoreno: string;
+}
+
+export type FinanceType = 'prijem' | 'vydaj';
+
+export interface FinanceSummary {
+  celkemPrijmy: number;
+  celkemVydaje: number;
+  bilance: number;
+  mesicniPrijmy: number;
+  mesicniVydaje: number;
+  mesicniBilance: number;
+}
+
+// Jídlo (Food) types
+export interface JidloEntry {
+  id: string;
+  nazev: string;
+  typ_jidla: MealType;
+  ingredience: string[];
+  postup: string;
+  cas_pripravy: number; // minutes
+  porce: number;
+  oblibene: boolean;
+  tagy: string[];
+  datum_pridani: string;
+}
+
+export type MealType = 'snidane' | 'obed' | 'vecere' | 'svacina' | 'dezert' | 'napoj';
