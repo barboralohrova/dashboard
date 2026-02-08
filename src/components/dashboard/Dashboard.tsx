@@ -2,24 +2,28 @@ import React, { useState, useEffect } from 'react';
 import { useAuthStore } from '../../stores/authStore';
 import { useGameStore } from '../../stores/gameStore';
 import { useTaskStore } from '../../stores/taskStore';
+import { useHabitStore } from '../../stores/habitStore';
 import { getGreeting } from '../../utils/helpers';
 import { Header } from '../layout/Header';
 import { StatusBar } from '../layout/StatusBar';
 import { BottomNav } from '../layout/BottomNav';
 import { EmeraldMap } from '../map/EmeraldMap';
 import { TaskList } from '../tasks/TaskList';
+import { HabitList } from '../habits/HabitList';
 
 export const Dashboard: React.FC = () => {
   const { user } = useAuthStore();
   const { loadGameState } = useGameStore();
   const { loadTasks } = useTaskStore();
+  const { loadHabits } = useHabitStore();
   const [activeModule, setActiveModule] = useState<string>('map');
   
   useEffect(() => {
     // Load initial data
     loadGameState();
     loadTasks();
-  }, [loadGameState, loadTasks]);
+    loadHabits();
+  }, [loadGameState, loadTasks, loadHabits]);
   
   const handleModuleChange = (module: string) => {
     setActiveModule(module);
@@ -66,13 +70,7 @@ export const Dashboard: React.FC = () => {
             </div>
           )}
           
-          {activeModule === 'habits' && (
-            <div className="text-center py-12">
-              <div className="text-6xl mb-4">🏋️</div>
-              <h3 className="text-2xl font-bold text-matcha-dark mb-2">Návyky</h3>
-              <p className="text-gray-600">Brzy k dispozici...</p>
-            </div>
-          )}
+          {activeModule === 'habits' && <HabitList />}
           
           {activeModule === 'more' && (
             <div className="text-center py-12">

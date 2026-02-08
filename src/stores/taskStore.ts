@@ -43,7 +43,20 @@ export const useTaskStore = create<TaskStore>((set, get) => ({
       await get().regenerateDailyTasks();
     } catch (error) {
       console.error('Failed to load tasks:', error);
-      set({ isLoading: false });
+      // Set empty tasks array on error - sheet may not be initialized yet
+      set({ tasks: [], isLoading: false });
+      
+      // Retry after a short delay (sheet might be initializing)
+      setTimeout(async () => {
+        try {
+          const data = await readFromSheet<Task>(accessToken, spreadsheetId, 'ukoly');
+          set({ tasks: data });
+          await get().regenerateDailyTasks();
+        } catch (retryError) {
+          console.error('Retry failed to load tasks:', retryError);
+          // Keep empty array, don't throw
+        }
+      }, 2000);
     }
   },
   
