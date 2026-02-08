@@ -9,6 +9,7 @@ interface HabitStore {
   habits: Navyk[];
   habitLogs: NavykLog[];
   isLoading: boolean;
+  loadingRetryTimeout?: ReturnType<typeof setTimeout>;
   
   loadHabits: () => Promise<void>;
   addHabit: (habit: Omit<Navyk, 'id' | 'datum_vytvoreni' | 'aktivni'>) => Promise<void>;
@@ -27,10 +28,18 @@ export const useHabitStore = create<HabitStore>((set, get) => ({
   habits: [],
   habitLogs: [],
   isLoading: false,
+  loadingRetryTimeout: undefined,
   
   loadHabits: async () => {
     const { accessToken, spreadsheetId } = useAuthStore.getState();
     if (!accessToken || !spreadsheetId) return;
+    
+    // Clear any pending retry
+    const currentRetryTimeout = get().loadingRetryTimeout;
+    if (currentRetryTimeout) {
+      clearTimeout(currentRetryTimeout);
+      set({ loadingRetryTimeout: undefined });
+    }
     
     set({ isLoading: true });
     
@@ -51,7 +60,7 @@ export const useHabitStore = create<HabitStore>((set, get) => ({
       set({ habits: [], habitLogs: [], isLoading: false });
       
       // Retry after a short delay (sheet might be initializing)
-      setTimeout(async () => {
+      const retryTimeout = setTimeout(async () => {
         try {
           const [habitsData, logsData] = await Promise.all([
             readFromSheet<Navyk>(accessToken, spreadsheetId, 'navyky'),
@@ -59,13 +68,17 @@ export const useHabitStore = create<HabitStore>((set, get) => ({
           ]);
           set({ 
             habits: habitsData.filter(h => h.aktivni !== false && h.aktivni as any !== 'false'),
-            habitLogs: logsData
+            habitLogs: logsData,
+            loadingRetryTimeout: undefined
           });
         } catch (retryError) {
           console.error('Retry failed to load habits:', retryError);
+          set({ loadingRetryTimeout: undefined });
           // Keep empty arrays, don't throw
         }
       }, 2000);
+      
+      set({ loadingRetryTimeout: retryTimeout });
     }
   },
   

@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import type { Navyk } from '../../types';
 import { Modal, Button, Input } from '../ui';
 
 interface HabitFormProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (habit: any) => void;
+  onSubmit: (habit: Omit<Navyk, 'id' | 'datum_vytvoreni' | 'aktivni'>) => void;
 }
 
 const AVAILABLE_ICONS = ['💧', '🏃‍♀️', '📖', '🧘‍♀️', '💊', '🍎', '🛌', '🧹', '🎯', '✍️', '🎨', '🎵'];
@@ -132,7 +133,7 @@ export const HabitForm: React.FC<HabitFormProps> = ({ isOpen, onClose, onSubmit 
               <button
                 key={diff.value}
                 type="button"
-                onClick={() => setObtiznost(diff.value as any)}
+                onClick={() => setObtiznost(diff.value as 'easy' | 'medium' | 'hard')}
                 className={`px-4 py-3 rounded-kawaii border-2 transition-all ${
                   obtiznost === diff.value
                     ? diff.color + ' border-2'

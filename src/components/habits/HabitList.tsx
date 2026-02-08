@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import type { Navyk } from '../../types';
 import { useHabitStore } from '../../stores/habitStore';
 import { HabitCard } from './HabitCard';
 import { HabitForm } from './HabitForm';
@@ -13,7 +14,7 @@ export const HabitList: React.FC = () => {
   const totalCount = todayHabits.length;
   const completionPercentage = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
   
-  const handleAddHabit = async (habitData: any) => {
+  const handleAddHabit = async (habitData: Omit<Navyk, 'id' | 'datum_vytvoreni' | 'aktivni'>) => {
     try {
       await addHabit(habitData);
     } catch (error) {
