@@ -236,3 +236,37 @@ export interface CestovaniEntry {
 }
 
 export type TripStatus = 'planovany' | 'probihajici' | 'dokonceny' | 'zruseny';
+
+// Zdraví (Health) types
+export interface ZdraviEntry {
+  id: string;
+  typ: HealthEntryType;
+  nazev: string;
+  datum: string;
+  popis?: string;
+  lekar?: string;
+  vysledek?: string;
+  dalsi_termin?: string;
+  pripominka_dny?: number;
+  kategorie: string;
+  tagy: string[];
+  vytvoreno: string;
+}
+
+export type HealthEntryType = 'prohlidka' | 'lek' | 'mereni' | 'ockovani' | 'alergie' | 'ostatni';
+
+// Domácnost (Home) types
+export interface DomacnostEntry {
+  id: string;
+  nazev: string;
+  typ: HomeTaskType;
+  frekvence: 'jednorázový' | 'denní' | 'týdenní' | 'měsíční' | 'roční';
+  posledni_splneni?: string;
+  dalsi_termin?: string;
+  priorita: 'nízká' | 'střední' | 'vysoká';
+  mistnost?: string;
+  poznamka?: string;
+  vytvoreno: string;
+}
+
+export type HomeTaskType = 'uklid' | 'udrzba' | 'nakup' | 'oprava' | 'zahrada' | 'ostatni';

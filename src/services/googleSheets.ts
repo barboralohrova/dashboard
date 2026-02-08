@@ -15,10 +15,11 @@ const SHEETS = [
   { name: 'finance', headers: ['id', 'typ', 'castka', 'kategorie', 'popis', 'datum', 'opakovani', 'vytvoreno'] },
   { name: 'jidlo', headers: ['id', 'nazev', 'typ_jidla', 'ingredience', 'postup', 'cas_pripravy', 'porce', 'oblibene', 'tagy', 'datum_pridani'] },
   { name: 'denik', headers: ['id', 'nazev', 'obsah', 'nalada', 'datum', 'tagy', 'vytvoreno', 'upraveno'] },
-  { name: 'zdravi', headers: ['id', 'placeholder'] },
+  { name: 'zdravi', headers: ['id', 'typ', 'nazev', 'datum', 'popis', 'lekar', 'vysledek', 'dalsi_termin', 'pripominka_dny', 'kategorie', 'tagy', 'vytvoreno'] },
   { name: 'pojisteni', headers: ['id', 'nazev', 'typ_pojisteni', 'pojistovna', 'cislo_smlouvy', 'castka_mesicne', 'datum_zacatku', 'datum_konce', 'poznamka', 'pripominka_pred_koncem_dny', 'datum_pridani'] },
   { name: 'vztahy', headers: ['id', 'jmeno', 'typ_vztahu', 'narozeniny', 'kontakt', 'poznamka', 'posledni_kontakt', 'pripominka_dny', 'tagy', 'datum_pridani'] },
   { name: 'cestovani', headers: ['id', 'nazev', 'destinace', 'datum_od', 'datum_do', 'rozpocet', 'utraceno', 'stav', 'poznamka', 'tagy', 'datum_pridani'] },
+  { name: 'domacnost', headers: ['id', 'nazev', 'typ', 'frekvence', 'posledni_splneni', 'dalsi_termin', 'priorita', 'mistnost', 'poznamka', 'vytvoreno'] },
 ];
 
 /**
