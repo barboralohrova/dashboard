@@ -46,7 +46,7 @@ export const FoodCard: React.FC<FoodCardProps> = ({ recipe, onDelete, onToggleFa
               </span>
               <span className="flex items-center space-x-1">
                 <span>🍽️</span>
-                <span>{recipe.porce} {recipe.porce === 1 ? 'porce' : 'porce'}</span>
+                <span>{recipe.porce} {recipe.porce === 1 ? 'porce' : recipe.porce >= 2 && recipe.porce <= 4 ? 'porce' : 'porcí'}</span>
               </span>
             </div>
           </div>

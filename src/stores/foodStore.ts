@@ -47,7 +47,7 @@ export const useFoodStore = create<FoodStore>((set, get) => ({
         tagy: row.tagy ? row.tagy.split(',').map((t: string) => t.trim()).filter(Boolean) : [],
         cas_pripravy: parseInt(row.cas_pripravy) || 0,
         porce: parseInt(row.porce) || 1,
-        oblibene: row.oblibene === 'true' || row.oblibene === 'true',
+        oblibene: row.oblibene === 'true',
       }));
       
       set({ recipes, isLoading: false });
@@ -65,7 +65,7 @@ export const useFoodStore = create<FoodStore>((set, get) => ({
             tagy: row.tagy ? row.tagy.split(',').map((t: string) => t.trim()).filter(Boolean) : [],
             cas_pripravy: parseInt(row.cas_pripravy) || 0,
             porce: parseInt(row.porce) || 1,
-            oblibene: row.oblibene === 'true' || row.oblibene === 'true',
+            oblibene: row.oblibene === 'true',
           }));
           set({ recipes, loadingRetryTimeout: undefined });
         } catch (retryError) {
