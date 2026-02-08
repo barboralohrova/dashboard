@@ -39,13 +39,8 @@ export const useAuthStore = create<AuthStore>((set) => ({
     set({ isLoading: true, error: null });
     
     try {
-      const { accessToken, refreshToken } = await googleAuth.handleOAuthCallback();
+      const { accessToken } = await googleAuth.handleOAuthCallback();
       const user = await googleAuth.getUserInfo(accessToken);
-      
-      // Uložit refresh token do localStorage
-      if (refreshToken) {
-        localStorage.setItem('refresh_token', refreshToken);
-      }
       
       // Inicializovat nebo načíst spreadsheet
       let spreadsheetId = localStorage.getItem('spreadsheet_id');
@@ -57,7 +52,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
       set({
         user,
         accessToken,
-        refreshToken,
+        refreshToken: null,
         spreadsheetId,
         isAuthenticated: true,
         isLoading: false,
@@ -74,7 +69,6 @@ export const useAuthStore = create<AuthStore>((set) => ({
   },
   
   logout: () => {
-    localStorage.removeItem('refresh_token');
     localStorage.removeItem('spreadsheet_id');
     set({
       user: null,
