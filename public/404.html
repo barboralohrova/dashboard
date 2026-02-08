@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Redirecting...</title>
+  <script>
+    // GitHub Pages SPA redirect trick
+    // Save the current path and redirect to the app root
+    sessionStorage.setItem('redirect', window.location.pathname + window.location.search + window.location.hash);
+    window.location.href = '/dashboard/';
+  </script>
+</head>
+<body>
+  <p>Redirecting...</p>
+</body>
+</html>
