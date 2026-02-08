@@ -1,6 +1,24 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-matcha-dark: #7C9A6E;
+  --color-matcha-light: #B4D4A0;
+  --color-accent: #D4A574;
+  --color-warm: #F2E8D0;
+  --color-salmon: #F4A4A4;
+  --color-lavender: #C4B5E0;
+  --color-lemon: #F5E6A3;
+  --color-highlight: #E8B4B8;
+  --color-background: #F7F5F0;
+  --color-card-bg: #FFFCF7;
+  --color-text-dark: #4A4A3F;
+
+  --font-sans: 'Quicksand', ui-sans-serif, system-ui, sans-serif;
+
+  --radius-kawaii: 1.5rem;
+  --radius-3xl: 24px;
+  --radius-4xl: 32px;
+}
 
 :root {
   font-family: 'Quicksand', ui-sans-serif, system-ui, sans-serif;
@@ -59,11 +77,6 @@ body {
 
 .shadow-sticker-accent {
   box-shadow: 4px 4px 0px #D4A574;
-}
-
-/* Utility classes for warm backgrounds */
-.bg-warm-card {
-  background-color: #FFFCF7;
 }
 
 /* Custom Scrollbar */
