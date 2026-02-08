@@ -43,8 +43,8 @@ export const HealthList: React.FC = () => {
     return (
       <div className="max-w-4xl mx-auto px-4 md:px-8 py-6">
         <div className="text-center py-12">
-          <div className="text-6xl mb-4">🏥</div>
-          <p className="text-xl text-gray-600">Načítám zdravotní záznamy...</p>
+          <div className="text-6xl mb-4 animate-bounce-gentle">🏥</div>
+          <p className="text-xl text-gray-600">(◕‿◕) Načítám zdravotní záznamy...</p>
         </div>
       </div>
     );

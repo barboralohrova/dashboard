@@ -106,8 +106,8 @@ export const FoodList: React.FC = () => {
       {/* Loading state */}
       {isLoading && (
         <div className="text-center py-12">
-          <div className="text-4xl mb-4">⏳</div>
-          <p className="text-gray-600">Načítám recepty...</p>
+          <div className="text-4xl mb-4 animate-bounce-gentle">🍳</div>
+          <p className="text-gray-600">(◕‿◕) Načítám recepty...</p>
         </div>
       )}
       
@@ -129,7 +129,7 @@ export const FoodList: React.FC = () => {
       {!isLoading && filteredRecipes.length === 0 && recipes.length === 0 && (
         <div className="text-center py-12">
           <div className="text-6xl mb-4">🍽️</div>
-          <p className="text-xl text-gray-600 mb-2">Zatím žádné recepty</p>
+          <p className="text-xl text-gray-600 mb-2">(◕ᴗ◕✿) Zatím žádné recepty</p>
           <p className="text-gray-500 mb-6">Přidej své oblíbené recepty a získej +10 XP za každý!</p>
           <Button onClick={() => setIsFormOpen(true)} variant="primary">
             Přidat první recept
@@ -141,7 +141,7 @@ export const FoodList: React.FC = () => {
       {!isLoading && filteredRecipes.length === 0 && recipes.length > 0 && (
         <div className="text-center py-12">
           <div className="text-6xl mb-4">🔍</div>
-          <p className="text-xl text-gray-600 mb-2">Žádné recepty</p>
+          <p className="text-xl text-gray-600 mb-2">(・_・?) Žádné recepty</p>
           <p className="text-gray-500">Zkus změnit filtr nebo hledaný výraz</p>
         </div>
       )}

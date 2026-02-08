@@ -132,7 +132,7 @@ export const TaskList: React.FC = () => {
       {activeTasks.length === 0 && (!filter.showCompleted || completedTasks.length === 0) && (
         <div className="text-center py-12">
           <div className="text-6xl mb-4">✨</div>
-          <p className="text-xl text-gray-600 mb-4">Žádné úkoly</p>
+          <p className="text-xl text-gray-600 mb-4">(◕ᴗ◕✿) Žádné úkoly</p>
           <Button onClick={() => setIsFormOpen(true)} variant="primary">
             Vytvořit první úkol
           </Button>

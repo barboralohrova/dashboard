@@ -123,8 +123,8 @@ export const CalendarView: React.FC = () => {
     return (
       <div className="max-w-5xl mx-auto p-6">
         <div className="text-center py-12">
-          <div className="text-6xl mb-4">📅</div>
-          <p className="text-xl text-gray-600">Načítám kalendář...</p>
+          <div className="text-6xl mb-4 animate-bounce-gentle">📅</div>
+          <p className="text-xl text-gray-600">(◕‿◕) Načítám kalendář...</p>
         </div>
       </div>
     );
