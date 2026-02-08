@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { VztahEntry } from '../types';
+import type { VztahEntry, RelationshipType } from '../types';
 import { generateId } from '../utils/helpers';
 import { readFromSheet, appendToSheet, updateSheetRow } from '../services/googleSheets';
 import { useAuthStore } from './authStore';
@@ -43,7 +43,7 @@ export const useRelationshipStore = create<RelationshipStore>((set, get) => ({
       const entries: VztahEntry[] = data.map((row: Record<string, string>) => ({
         id: row.id,
         jmeno: row.jmeno,
-        typ_vztahu: row.typ_vztahu as any,
+        typ_vztahu: row.typ_vztahu as RelationshipType,
         narozeniny: row.narozeniny || undefined,
         kontakt: row.kontakt || undefined,
         poznamka: row.poznamka || undefined,
@@ -65,7 +65,7 @@ export const useRelationshipStore = create<RelationshipStore>((set, get) => ({
           const entries: VztahEntry[] = data.map((row: Record<string, string>) => ({
             id: row.id,
             jmeno: row.jmeno,
-            typ_vztahu: row.typ_vztahu as any,
+            typ_vztahu: row.typ_vztahu as RelationshipType,
             narozeniny: row.narozeniny || undefined,
             kontakt: row.kontakt || undefined,
             poznamka: row.poznamka || undefined,

@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { PojisteniEntry } from '../types';
+import type { PojisteniEntry, InsuranceType } from '../types';
 import { generateId } from '../utils/helpers';
 import { readFromSheet, appendToSheet, updateSheetRow } from '../services/googleSheets';
 import { useAuthStore } from './authStore';
@@ -43,7 +43,7 @@ export const useInsuranceStore = create<InsuranceStore>((set, get) => ({
       const entries: PojisteniEntry[] = data.map((row: Record<string, string>) => ({
         id: row.id,
         nazev: row.nazev,
-        typ_pojisteni: row.typ_pojisteni as any,
+        typ_pojisteni: row.typ_pojisteni as InsuranceType,
         pojistovna: row.pojistovna,
         cislo_smlouvy: row.cislo_smlouvy || undefined,
         castka_mesicne: Number(row.castka_mesicne),
@@ -66,7 +66,7 @@ export const useInsuranceStore = create<InsuranceStore>((set, get) => ({
           const entries: PojisteniEntry[] = data.map((row: Record<string, string>) => ({
             id: row.id,
             nazev: row.nazev,
-            typ_pojisteni: row.typ_pojisteni as any,
+            typ_pojisteni: row.typ_pojisteni as InsuranceType,
             pojistovna: row.pojistovna,
             cislo_smlouvy: row.cislo_smlouvy || undefined,
             castka_mesicne: Number(row.castka_mesicne),

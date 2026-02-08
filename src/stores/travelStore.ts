@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { CestovaniEntry } from '../types';
+import type { CestovaniEntry, TripStatus } from '../types';
 import { generateId } from '../utils/helpers';
 import { readFromSheet, appendToSheet, updateSheetRow } from '../services/googleSheets';
 import { useAuthStore } from './authStore';
@@ -48,7 +48,7 @@ export const useTravelStore = create<TravelStore>((set, get) => ({
         datum_do: row.datum_do || undefined,
         rozpocet: row.rozpocet ? Number(row.rozpocet) : undefined,
         utraceno: row.utraceno ? Number(row.utraceno) : undefined,
-        stav: row.stav as any,
+        stav: row.stav as TripStatus,
         poznamka: row.poznamka || undefined,
         tagy: row.tagy ? row.tagy.split(',').map((t: string) => t.trim()).filter(Boolean) : [],
         datum_pridani: row.datum_pridani,
@@ -71,7 +71,7 @@ export const useTravelStore = create<TravelStore>((set, get) => ({
             datum_do: row.datum_do || undefined,
             rozpocet: row.rozpocet ? Number(row.rozpocet) : undefined,
             utraceno: row.utraceno ? Number(row.utraceno) : undefined,
-            stav: row.stav as any,
+            stav: row.stav as TripStatus,
             poznamka: row.poznamka || undefined,
             tagy: row.tagy ? row.tagy.split(',').map((t: string) => t.trim()).filter(Boolean) : [],
             datum_pridani: row.datum_pridani,
