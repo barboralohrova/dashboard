@@ -201,7 +201,7 @@ export interface VztahEntry {
   datum_pridani: string;
 }
 
-export type RelationshipType = 'rodina' | 'partner' | 'pritel' | 'kolega' | 'znamý' | 'ostatni';
+export type RelationshipType = 'rodina' | 'partner' | 'pritel' | 'kolega' | 'známý' | 'ostatni';
 
 // Pojištění (Insurance) types
 export interface PojisteniEntry {

@@ -11,7 +11,7 @@ const TYPE_FILTERS: { value: RelationshipType | 'vse'; emoji: string; label: str
   { value: 'partner', emoji: '💑', label: 'Partner' },
   { value: 'pritel', emoji: '👫', label: 'Přítel' },
   { value: 'kolega', emoji: '💼', label: 'Kolega' },
-  { value: 'znamý', emoji: '👋', label: 'Známý' },
+  { value: 'známý', emoji: '👋', label: 'Známý' },
   { value: 'ostatni', emoji: '👤', label: 'Ostatní' },
 ];
 

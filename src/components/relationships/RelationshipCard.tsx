@@ -13,7 +13,7 @@ const TYPE_EMOJIS: Record<RelationshipType, string> = {
   partner: '💑',
   pritel: '👫',
   kolega: '💼',
-  znamý: '👋',
+  známý: '👋',
   ostatni: '👤',
 };
 
@@ -22,7 +22,7 @@ const TYPE_LABELS: Record<RelationshipType, string> = {
   partner: 'Partner',
   pritel: 'Přítel',
   kolega: 'Kolega',
-  znamý: 'Známý',
+  známý: 'Známý',
   ostatni: 'Ostatní',
 };
 

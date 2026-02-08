@@ -13,7 +13,7 @@ const RELATIONSHIP_TYPES: { type: RelationshipType; emoji: string; label: string
   { type: 'partner', emoji: '💑', label: 'Partner' },
   { type: 'pritel', emoji: '👫', label: 'Přítel' },
   { type: 'kolega', emoji: '💼', label: 'Kolega' },
-  { type: 'znamý', emoji: '👋', label: 'Známý' },
+  { type: 'známý', emoji: '👋', label: 'Známý' },
   { type: 'ostatni', emoji: '👤', label: 'Ostatní' },
 ];
 
