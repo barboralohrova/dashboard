@@ -12,7 +12,7 @@ export const StatusBar: React.FC = () => {
   const todayTasks = tasks.filter((t) => t.stav === 'aktivni').length;
   
   return (
-    <div className="bg-white/90 backdrop-blur-sm shadow-md border-b border-matcha-light/20 p-4 md:p-6 px-4 md:px-8">
+    <div className="bg-white/90 backdrop-blur-sm shadow-md border-b border-matcha-light/20 py-4 md:py-6 px-4 md:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Mobile - Stacked Layout */}
         <div className="md:hidden flex flex-col space-y-4">
