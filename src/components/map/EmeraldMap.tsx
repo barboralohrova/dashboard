@@ -184,7 +184,9 @@ export const EmeraldMap: React.FC<EmeraldMapProps> = ({ onBuildingClick }) => {
         <div className="relative">
           {/* Speech bubble - hide when animating */}
           {!animatingTo && (
-            <div className={`hidden md:block absolute bottom-full left-1/2 transform -translate-x-1/2 mb-4 rounded-3xl px-5 py-2 shadow-sticker-dark border-[3px] border-matcha-light whitespace-nowrap bg-white`}>
+            <div className="hidden md:block absolute bottom-full left-1/2 transform -translate-x-1/2 mb-4 
+                          rounded-3xl px-5 py-2 shadow-sticker-dark border-[3px] border-matcha-light 
+                          whitespace-nowrap bg-white">
               <p className="text-xs md:text-sm font-semibold text-matcha-dark">{greetings[dayPeriod]}</p>
               {/* Speech bubble tail */}
               <div className="absolute top-full left-1/2 transform -translate-x-1/2 -mt-[3px]">
