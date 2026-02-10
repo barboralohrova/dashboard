@@ -37,6 +37,14 @@ const CATEGORY_COLORS = {
 // Center point for Lístka's starting position
 const LISTKA_START = { x: '50%', y: '50%' };
 
+// Animation constants
+const ANIMATION_DURATION_MS = 1200; // Time for Lístka to travel to a building
+const ANIMATION_DURATION_CSS = '1000ms'; // CSS transition duration (slightly shorter for smooth feel)
+const POSITION_RESET_DELAY_MS = 500; // Delay before resetting Lístka position after module change
+
+// SVG path constants
+const PATH_CURVE_OFFSET = 5; // Offset for creating organic curved paths between center and buildings
+
 interface EmeraldMapProps {
   onBuildingClick: (module: string) => void;
 }
@@ -75,13 +83,17 @@ export const EmeraldMap: React.FC<EmeraldMapProps> = ({ onBuildingClick }) => {
     setTimeout(() => {
       onBuildingClick(building.module);
       setAnimatingTo(null);
-      // Reset Lístka position
-      setTimeout(() => setListkaPosition(LISTKA_START), 500);
-    }, 1200); // Animation duration
+      // Reset Lístka position after a brief delay
+      setTimeout(() => setListkaPosition(LISTKA_START), POSITION_RESET_DELAY_MS);
+    }, ANIMATION_DURATION_MS);
   };
   
   return (
-    <div className={`relative w-full min-h-[80vh] md:min-h-[90vh] rounded-3xl overflow-hidden bg-gradient-to-br ${bgGradients[dayPeriod]} p-4 md:p-6`}>
+    <div 
+      className={`relative w-full min-h-[80vh] md:min-h-[90vh] rounded-3xl overflow-hidden bg-gradient-to-br ${bgGradients[dayPeriod]} p-4 md:p-6`}
+      role="region"
+      aria-label="Interaktivní lesní mapa"
+    >
       {/* Forest background decorations */}
       <div className="absolute inset-0 pointer-events-none">
         {/* Trees around the edges */}
@@ -159,11 +171,12 @@ export const EmeraldMap: React.FC<EmeraldMapProps> = ({ onBuildingClick }) => {
         {BUILDINGS.map((building, index) => {
           const startX = 50;
           const startY = 50;
-          const endX = parseInt(building.position.x);
-          const endY = parseInt(building.position.y);
+          // Parse percentage values explicitly for path calculations
+          const endX = parseInt(building.position.x); // e.g., '15%' -> 15
+          const endY = parseInt(building.position.y); // e.g., '20%' -> 20
           
-          // Create curved path with stable randomization based on index
-          const offset = (index % 2 === 0 ? 5 : -5);
+          // Create curved path with stable offset based on index for organic appearance
+          const offset = (index % 2 === 0 ? PATH_CURVE_OFFSET : -PATH_CURVE_OFFSET);
           const controlX1 = (startX + endX) / 2 + offset;
           const controlY1 = (startY + endY) / 2 + offset;
           
@@ -186,11 +199,16 @@ export const EmeraldMap: React.FC<EmeraldMapProps> = ({ onBuildingClick }) => {
       <div className="relative w-full h-full z-10">
         {BUILDINGS.map((building) => {
           const colors = CATEGORY_COLORS[building.category];
+          const ariaLabel = animatingTo 
+            ? 'Animace probíhá...' 
+            : `Přejít do modulu ${building.name}`;
+          
           return (
             <button
               key={building.id}
               onClick={() => handleBuildingClick(building)}
               disabled={!!animatingTo}
+              aria-label={ariaLabel}
               className={`absolute transform -translate-x-1/2 -translate-y-1/2 ${colors.bg} ${colors.border} ${colors.shadow} border-[3px] rounded-3xl p-2 md:p-4 hover:scale-110 active:scale-95 transition-all duration-200 hover-wobble flex flex-col items-center justify-center min-w-[90px] min-h-[90px] md:min-w-[120px] md:min-h-[120px] ${animatingTo ? 'opacity-50' : ''}`}
               style={{
                 left: building.position.x,
@@ -210,10 +228,11 @@ export const EmeraldMap: React.FC<EmeraldMapProps> = ({ onBuildingClick }) => {
       
       {/* Lístka avatar - Animated character */}
       <div 
-        className="absolute transform -translate-x-1/2 -translate-y-1/2 z-30 transition-all duration-1000 ease-in-out"
+        className="absolute transform -translate-x-1/2 -translate-y-1/2 z-30 ease-in-out"
         style={{
           left: listkaPosition.x,
           top: listkaPosition.y,
+          transition: `left ${ANIMATION_DURATION_CSS} ease-in-out, top ${ANIMATION_DURATION_CSS} ease-in-out`,
         }}
       >
         <div className="relative">
