@@ -1,5 +1,20 @@
 import React, { useState } from 'react';
 import { getDayPeriod } from '../../utils/helpers';
+import { ListkaSprite } from './ListkaSprite';
+import { ForestDecorations } from './ForestDecorations';
+import { MapPaths } from './MapPaths';
+import { TasksBuilding } from './buildings/TasksBuilding';
+import { CalendarBuilding } from './buildings/CalendarBuilding';
+import { FinanceBuilding } from './buildings/FinanceBuilding';
+import { FoodBuilding } from './buildings/FoodBuilding';
+import { DiaryBuilding } from './buildings/DiaryBuilding';
+import { HabitsBuilding } from './buildings/HabitsBuilding';
+import { LearningBuilding } from './buildings/LearningBuilding';
+import { HomeBuilding } from './buildings/HomeBuilding';
+import { HealthBuilding } from './buildings/HealthBuilding';
+import { RelationshipsBuilding } from './buildings/RelationshipsBuilding';
+import { InsuranceBuilding } from './buildings/InsuranceBuilding';
+import { TravelBuilding } from './buildings/TravelBuilding';
 
 interface Building {
   id: string;
@@ -25,13 +40,20 @@ const BUILDINGS: Building[] = [
   { id: 'travel', name: 'Cestovatelský kůl', icon: '🧳', module: 'travel', category: 'travel', position: { x: '85%', y: '50%' } },
 ];
 
-const CATEGORY_COLORS = {
-  tasks: { bg: 'bg-blue-50', border: 'border-blue-200', shadow: 'shadow-[4px_4px_0px_#BFDBFE]' },
-  finance: { bg: 'bg-lemon', border: 'border-yellow-300', shadow: 'shadow-[4px_4px_0px_#FDE68A]' },
-  food: { bg: 'bg-matcha-light', border: 'border-matcha-dark', shadow: 'shadow-sticker-dark' },
-  personal: { bg: 'bg-salmon/40', border: 'border-salmon', shadow: 'shadow-sticker-salmon' },
-  travel: { bg: 'bg-lavender/40', border: 'border-lavender', shadow: 'shadow-sticker-lavender' },
-  home: { bg: 'bg-warm', border: 'border-accent', shadow: 'shadow-sticker-accent' },
+// Map building ID to SVG component
+const BUILDING_COMPONENTS: Record<string, React.FC<{ className?: string }>> = {
+  tasks: TasksBuilding,
+  calendar: CalendarBuilding,
+  finance: FinanceBuilding,
+  food: FoodBuilding,
+  diary: DiaryBuilding,
+  habits: HabitsBuilding,
+  learning: LearningBuilding,
+  home: HomeBuilding,
+  health: HealthBuilding,
+  relationships: RelationshipsBuilding,
+  insurance: InsuranceBuilding,
+  travel: TravelBuilding,
 };
 
 // Center point for Lístka's starting position
@@ -39,11 +61,8 @@ const LISTKA_START = { x: '50%', y: '50%' };
 
 // Animation constants
 const ANIMATION_DURATION_MS = 1200; // Time for Lístka to travel to a building
-const ANIMATION_DURATION_CSS = '1000ms'; // CSS transition duration (slightly shorter for smooth feel)
+const ANIMATION_DURATION_CSS = '1.2s'; // CSS transition duration
 const POSITION_RESET_DELAY_MS = 500; // Delay before resetting Lístka position after module change
-
-// SVG path constants
-const PATH_CURVE_OFFSET = 5; // Offset for creating organic curved paths between center and buildings
 
 interface EmeraldMapProps {
   onBuildingClick: (module: string) => void;
@@ -51,7 +70,6 @@ interface EmeraldMapProps {
 
 export const EmeraldMap: React.FC<EmeraldMapProps> = ({ onBuildingClick }) => {
   const dayPeriod = getDayPeriod();
-  const [avatarError, setAvatarError] = useState(false);
   const [animatingTo, setAnimatingTo] = useState<string | null>(null);
   const [listkaPosition, setListkaPosition] = useState(LISTKA_START);
   
@@ -94,45 +112,11 @@ export const EmeraldMap: React.FC<EmeraldMapProps> = ({ onBuildingClick }) => {
       role="region"
       aria-label="Interaktivní lesní mapa"
     >
-      {/* Forest background decorations */}
-      <div className="absolute inset-0 pointer-events-none">
-        {/* Trees around the edges */}
-        <div className="absolute left-2 top-10 text-4xl md:text-6xl animate-pulse opacity-30" style={{ animationDuration: '4s' }}>
-          🌲
-        </div>
-        <div className="absolute right-2 top-10 text-4xl md:text-6xl animate-pulse opacity-30" style={{ animationDuration: '5s' }}>
-          🌳
-        </div>
-        <div className="absolute left-2 bottom-10 text-4xl md:text-6xl animate-pulse opacity-30" style={{ animationDuration: '6s' }}>
-          🌲
-        </div>
-        <div className="absolute right-2 bottom-10 text-4xl md:text-6xl animate-pulse opacity-30" style={{ animationDuration: '5.5s' }}>
-          🌳
-        </div>
-        
-        {/* Additional forest elements */}
-        <div className="absolute left-[12%] top-[40%] text-2xl opacity-40">🌿</div>
-        <div className="absolute right-[15%] top-[55%] text-2xl opacity-40">🍄</div>
-        <div className="absolute left-[30%] bottom-[20%] text-2xl opacity-40">🌺</div>
-        <div className="absolute right-[35%] bottom-[25%] text-2xl opacity-40">🪨</div>
-        <div className="absolute left-[60%] top-[35%] text-2xl opacity-40">🌻</div>
-        <div className="absolute right-[25%] top-[70%] text-2xl opacity-40">🌿</div>
-        
-        {/* Stars at night */}
-        {dayPeriod === 'night' && (
-          <>
-            <div className="absolute left-[20%] top-[8%] text-xl animate-pulse">⭐</div>
-            <div className="absolute right-[25%] top-[12%] text-lg animate-pulse">✨</div>
-            <div className="absolute left-[70%] top-[6%] text-xl animate-pulse">⭐</div>
-            <div className="absolute right-[15%] top-[15%] text-lg animate-pulse">✨</div>
-          </>
-        )}
-        
-        {/* Sun/Moon */}
-        <div className="absolute right-[8%] top-[5%] text-4xl md:text-5xl">
-          {dayPeriod === 'night' ? '🌙' : '☀️'}
-        </div>
-      </div>
+      {/* Forest decorations - trees, bushes, mushrooms, etc. */}
+      <ForestDecorations dayPeriod={dayPeriod} />
+      
+      {/* SVG Paths connecting buildings */}
+      <MapPaths buildings={BUILDINGS} centerX={50} centerY={50} />
       
       {/* Period indicator */}
       <div className={`absolute top-4 left-4 px-4 py-2 rounded-full bg-white/90 backdrop-blur-sm shadow-sticker border-[2px] border-matcha-light ${textColor} text-xs md:text-sm font-semibold z-20`}>
@@ -152,83 +136,45 @@ export const EmeraldMap: React.FC<EmeraldMapProps> = ({ onBuildingClick }) => {
         </p>
       </div>
       
-      {/* SVG Paths - Forest walkways connecting buildings */}
-      <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" style={{ opacity: 0.6 }}>
-        <defs>
-          <filter id="pathShadow">
-            <feGaussianBlur in="SourceAlpha" stdDeviation="2"/>
-            <feOffset dx="2" dy="2" result="offsetblur"/>
-            <feFlood floodColor="#4B3621" floodOpacity="0.3"/>
-            <feComposite in2="offsetblur" operator="in"/>
-            <feMerge>
-              <feMergeNode/>
-              <feMergeNode in="SourceGraphic"/>
-            </feMerge>
-          </filter>
-        </defs>
-        
-        {/* Paths from center to each building */}
-        {BUILDINGS.map((building, index) => {
-          const startX = 50;
-          const startY = 50;
-          // Parse percentage values explicitly for path calculations
-          const endX = parseInt(building.position.x); // e.g., '15%' -> 15
-          const endY = parseInt(building.position.y); // e.g., '20%' -> 20
-          
-          // Create curved path with stable offset based on index for organic appearance
-          const offset = (index % 2 === 0 ? PATH_CURVE_OFFSET : -PATH_CURVE_OFFSET);
-          const controlX1 = (startX + endX) / 2 + offset;
-          const controlY1 = (startY + endY) / 2 + offset;
-          
-          return (
-            <path
-              key={`path-${building.id}`}
-              d={`M ${startX}% ${startY}% Q ${controlX1}% ${controlY1}%, ${endX}% ${endY}%`}
-              stroke="#8B7355"
-              strokeWidth="4"
-              fill="none"
-              strokeLinecap="round"
-              filter="url(#pathShadow)"
-              strokeDasharray="8,4"
-            />
-          );
-        })}
-      </svg>
-      
-      {/* Buildings - Organically positioned */}
+      {/* Buildings - SVG illustrations organically positioned */}
       <div className="relative w-full h-full z-10">
         {BUILDINGS.map((building) => {
-          const colors = CATEGORY_COLORS[building.category];
-          const ariaLabel = animatingTo 
-            ? 'Animace probíhá...' 
-            : `Přejít do modulu ${building.name}`;
+          const BuildingComponent = BUILDING_COMPONENTS[building.id];
+          const isActive = animatingTo === building.id;
           
           return (
             <button
               key={building.id}
               onClick={() => handleBuildingClick(building)}
               disabled={!!animatingTo}
-              aria-label={ariaLabel}
-              className={`absolute transform -translate-x-1/2 -translate-y-1/2 ${colors.bg} ${colors.border} ${colors.shadow} border-[3px] rounded-3xl p-2 md:p-4 hover:scale-110 active:scale-95 transition-all duration-200 hover-wobble flex flex-col items-center justify-center min-w-[90px] min-h-[90px] md:min-w-[120px] md:min-h-[120px] ${animatingTo ? 'opacity-50' : ''}`}
+              aria-label={`Přejít do modulu ${building.name}`}
+              className={`absolute transform -translate-x-1/2 -translate-y-1/2 transition-all duration-300 hover:scale-110 hover:z-30 active:scale-95 ${
+                animatingTo && !isActive ? 'opacity-50' : ''
+              } ${isActive ? 'scale-105 z-30' : 'hover-wobble'}`}
               style={{
                 left: building.position.x,
                 top: building.position.y,
               }}
             >
-              <div className="text-3xl md:text-5xl mb-1 md:mb-2">
-                {building.icon}
+              {/* SVG Building illustration */}
+              <div className="w-20 h-24 md:w-28 md:h-32 lg:w-32 lg:h-36 drop-shadow-lg">
+                {BuildingComponent && <BuildingComponent className="w-full h-full" />}
               </div>
-              <p className="text-[10px] md:text-sm font-semibold text-matcha-dark text-center leading-tight">
-                {building.name}
-              </p>
+              
+              {/* Building name label */}
+              <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 bg-white/95 backdrop-blur-sm px-3 py-1 rounded-full shadow-md border-2 border-matcha-light whitespace-nowrap">
+                <p className="text-[10px] md:text-xs font-bold text-matcha-dark">
+                  {building.name}
+                </p>
+              </div>
             </button>
           );
         })}
       </div>
       
-      {/* Lístka avatar - Animated character */}
+      {/* Lístka avatar - Animated SVG character */}
       <div 
-        className="absolute transform -translate-x-1/2 -translate-y-1/2 z-30 ease-in-out"
+        className="absolute transform -translate-x-1/2 -translate-y-1/2 z-40 pointer-events-none"
         style={{
           left: listkaPosition.x,
           top: listkaPosition.y,
@@ -236,11 +182,9 @@ export const EmeraldMap: React.FC<EmeraldMapProps> = ({ onBuildingClick }) => {
         }}
       >
         <div className="relative">
-          {/* Speech bubble - hide on mobile or when animating */}
+          {/* Speech bubble - hide when animating */}
           {!animatingTo && (
-            <div className={`hidden md:block absolute bottom-full left-1/2 transform -translate-x-1/2 mb-4 rounded-3xl px-5 py-2 shadow-sticker-dark border-[3px] border-matcha-light whitespace-nowrap ${
-              dayPeriod === 'night' ? 'bg-white' : 'bg-white'
-            }`}>
+            <div className={`hidden md:block absolute bottom-full left-1/2 transform -translate-x-1/2 mb-4 rounded-3xl px-5 py-2 shadow-sticker-dark border-[3px] border-matcha-light whitespace-nowrap bg-white`}>
               <p className="text-xs md:text-sm font-semibold text-matcha-dark">{greetings[dayPeriod]}</p>
               {/* Speech bubble tail */}
               <div className="absolute top-full left-1/2 transform -translate-x-1/2 -mt-[3px]">
@@ -250,20 +194,9 @@ export const EmeraldMap: React.FC<EmeraldMapProps> = ({ onBuildingClick }) => {
             </div>
           )}
           
-          {/* Avatar with floating animation */}
-          <div 
-            className="w-16 h-16 md:w-24 md:h-24 rounded-full bg-white border-[3px] border-matcha-dark shadow-sticker-dark flex items-center justify-center animate-float"
-          >
-            {!avatarError ? (
-              <img 
-                src="/dashboard/listka-avatar.png" 
-                alt="Lístka" 
-                className="w-full h-full rounded-full object-cover"
-                onError={() => setAvatarError(true)}
-              />
-            ) : (
-              <span className="text-3xl md:text-5xl">🌿</span>
-            )}
+          {/* Lístka SVG sprite with floating animation */}
+          <div className="w-20 h-20 md:w-28 md:h-28 animate-float drop-shadow-xl">
+            <ListkaSprite className="w-full h-full" showOrb={!animatingTo} />
           </div>
         </div>
       </div>
