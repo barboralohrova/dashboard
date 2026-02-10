@@ -58,9 +58,14 @@ export const EmeraldMap: React.FC<EmeraldMapProps> = ({ onBuildingClick }) => {
     }, ANIMATION_DURATION_MS);
   };
 
+  // Safe building lookup helper
+  const getBuildingById = (id: string): Building | undefined => {
+    return BUILDINGS.find(b => b.id === id);
+  };
+
   // Day period colors
   const isDark = dayPeriod === 'night';
-  const showIdleElements = !animatingTo; // Show orb and speech bubble when not animating
+  const isListkaIdle = !animatingTo; // Show orb and speech bubble when Lístka is idle
   const skyColors = {
     morning: ['#FF9966', '#FFD700', '#87CEEB'],
     day: ['#87CEEB', '#98D8C8', '#90EE90'],
@@ -230,7 +235,10 @@ export const EmeraldMap: React.FC<EmeraldMapProps> = ({ onBuildingClick }) => {
 
         {/* 1. Tasks Building - Stone Well with Bulletin Board */}
         <g
-          onClick={() => handleBuildingClick(BUILDINGS.find(b => b.id === 'tasks')!)}
+          onClick={() => {
+            const building = getBuildingById('tasks');
+            if (building) handleBuildingClick(building);
+          }}
           onMouseEnter={() => setHoveredBuilding('tasks')}
           onMouseLeave={() => setHoveredBuilding(null)}
           style={{ cursor: 'pointer' }}
@@ -273,7 +281,7 @@ export const EmeraldMap: React.FC<EmeraldMapProps> = ({ onBuildingClick }) => {
 
         {/* 2. Calendar Building - Watchtower in Tree */}
         <g
-          onClick={() => handleBuildingClick(BUILDINGS.find(b => b.id === "calendar")!)}
+          onClick={() => { const building = getBuildingById("calendar"); if (building) handleBuildingClick(building); }}
           onMouseEnter={() => setHoveredBuilding('calendar')}
           onMouseLeave={() => setHoveredBuilding(null)}
           style={{ cursor: 'pointer' }}
@@ -314,7 +322,7 @@ export const EmeraldMap: React.FC<EmeraldMapProps> = ({ onBuildingClick }) => {
 
         {/* 3. Finance Building - Wisdom Tree */}
         <g
-          onClick={() => handleBuildingClick(BUILDINGS.find(b => b.id === "finance")!)}
+          onClick={() => { const building = getBuildingById("finance"); if (building) handleBuildingClick(building); }}
           onMouseEnter={() => setHoveredBuilding('finance')}
           onMouseLeave={() => setHoveredBuilding(null)}
           style={{ cursor: 'pointer' }}
@@ -357,7 +365,7 @@ export const EmeraldMap: React.FC<EmeraldMapProps> = ({ onBuildingClick }) => {
 
         {/* 4. Food Building - Kitchen Hut */}
         <g
-          onClick={() => handleBuildingClick(BUILDINGS.find(b => b.id === "food")!)}
+          onClick={() => { const building = getBuildingById("food"); if (building) handleBuildingClick(building); }}
           onMouseEnter={() => setHoveredBuilding('food')}
           onMouseLeave={() => setHoveredBuilding(null)}
           style={{ cursor: 'pointer' }}
@@ -412,7 +420,7 @@ export const EmeraldMap: React.FC<EmeraldMapProps> = ({ onBuildingClick }) => {
 
         {/* 5. Diary Building - Secret Chest */}
         <g
-          onClick={() => handleBuildingClick(BUILDINGS.find(b => b.id === "diary")!)}
+          onClick={() => { const building = getBuildingById("diary"); if (building) handleBuildingClick(building); }}
           onMouseEnter={() => setHoveredBuilding('diary')}
           onMouseLeave={() => setHoveredBuilding(null)}
           style={{ cursor: 'pointer' }}
@@ -457,7 +465,7 @@ export const EmeraldMap: React.FC<EmeraldMapProps> = ({ onBuildingClick }) => {
 
         {/* 6. Habits Building - Training Meadow */}
         <g
-          onClick={() => handleBuildingClick(BUILDINGS.find(b => b.id === "habits")!)}
+          onClick={() => { const building = getBuildingById("habits"); if (building) handleBuildingClick(building); }}
           onMouseEnter={() => setHoveredBuilding('habits')}
           onMouseLeave={() => setHoveredBuilding(null)}
           style={{ cursor: 'pointer' }}
@@ -509,7 +517,7 @@ export const EmeraldMap: React.FC<EmeraldMapProps> = ({ onBuildingClick }) => {
 
         {/* 7. Learning Building - Knowledge Cave */}
         <g
-          onClick={() => handleBuildingClick(BUILDINGS.find(b => b.id === "learning")!)}
+          onClick={() => { const building = getBuildingById("learning"); if (building) handleBuildingClick(building); }}
           onMouseEnter={() => setHoveredBuilding('learning')}
           onMouseLeave={() => setHoveredBuilding(null)}
           style={{ cursor: 'pointer' }}
@@ -557,7 +565,7 @@ export const EmeraldMap: React.FC<EmeraldMapProps> = ({ onBuildingClick }) => {
 
         {/* 8. Home Building - Treehouse */}
         <g
-          onClick={() => handleBuildingClick(BUILDINGS.find(b => b.id === "home")!)}
+          onClick={() => { const building = getBuildingById("home"); if (building) handleBuildingClick(building); }}
           onMouseEnter={() => setHoveredBuilding('home')}
           onMouseLeave={() => setHoveredBuilding(null)}
           style={{ cursor: 'pointer' }}
@@ -625,7 +633,7 @@ export const EmeraldMap: React.FC<EmeraldMapProps> = ({ onBuildingClick }) => {
 
         {/* 9. Health Building - Herbalist */}
         <g
-          onClick={() => handleBuildingClick(BUILDINGS.find(b => b.id === "health")!)}
+          onClick={() => { const building = getBuildingById("health"); if (building) handleBuildingClick(building); }}
           onMouseEnter={() => setHoveredBuilding('health')}
           onMouseLeave={() => setHoveredBuilding(null)}
           style={{ cursor: 'pointer' }}
@@ -682,7 +690,7 @@ export const EmeraldMap: React.FC<EmeraldMapProps> = ({ onBuildingClick }) => {
 
         {/* 10. Relationships Building - Mailbox with Owl */}
         <g
-          onClick={() => handleBuildingClick(BUILDINGS.find(b => b.id === "relationships")!)}
+          onClick={() => { const building = getBuildingById("relationships"); if (building) handleBuildingClick(building); }}
           onMouseEnter={() => setHoveredBuilding('relationships')}
           onMouseLeave={() => setHoveredBuilding(null)}
           style={{ cursor: 'pointer' }}
@@ -742,7 +750,7 @@ export const EmeraldMap: React.FC<EmeraldMapProps> = ({ onBuildingClick }) => {
 
         {/* 11. Insurance Building - Guard Tower */}
         <g
-          onClick={() => handleBuildingClick(BUILDINGS.find(b => b.id === "insurance")!)}
+          onClick={() => { const building = getBuildingById("insurance"); if (building) handleBuildingClick(building); }}
           onMouseEnter={() => setHoveredBuilding('insurance')}
           onMouseLeave={() => setHoveredBuilding(null)}
           style={{ cursor: 'pointer' }}
@@ -792,7 +800,7 @@ export const EmeraldMap: React.FC<EmeraldMapProps> = ({ onBuildingClick }) => {
 
         {/* 12. Travel Building - Travel Post */}
         <g
-          onClick={() => handleBuildingClick(BUILDINGS.find(b => b.id === "travel")!)}
+          onClick={() => { const building = getBuildingById("travel"); if (building) handleBuildingClick(building); }}
           onMouseEnter={() => setHoveredBuilding('travel')}
           onMouseLeave={() => setHoveredBuilding(null)}
           style={{ cursor: 'pointer' }}
@@ -896,7 +904,7 @@ export const EmeraldMap: React.FC<EmeraldMapProps> = ({ onBuildingClick }) => {
           <path d="M 5,10 Q 6,15 5,18" stroke="#558B2F" strokeWidth="1" fill="none" />
 
           {/* Floating orb when not animating */}
-          {showIdleElements && (
+          {isListkaIdle && (
             <g opacity="0.8">
               <circle cx="15" cy="-10" r="5" fill="#FFD700" opacity="0.6" />
               <circle cx="15" cy="-10" r="3" fill="#FFF" opacity="0.8" />
@@ -905,7 +913,7 @@ export const EmeraldMap: React.FC<EmeraldMapProps> = ({ onBuildingClick }) => {
           )}
 
           {/* Speech bubble - only show when not animating */}
-          {showIdleElements && (
+          {isListkaIdle && (
             <g transform="translate(0, -50)">
               <rect x="-60" y="-20" width="120" height="30" rx="15" fill="white" stroke="#76B947" strokeWidth="2" />
               <polygon points="0,10 -8,5 8,5" fill="white" />
